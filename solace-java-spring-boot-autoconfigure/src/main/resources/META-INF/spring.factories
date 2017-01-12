@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.solace.labs.spring.boot.autoconfigure.SolaceJavaAutoConfiguration
