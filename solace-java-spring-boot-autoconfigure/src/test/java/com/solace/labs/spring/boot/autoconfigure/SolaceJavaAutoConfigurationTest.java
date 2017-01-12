@@ -19,7 +19,7 @@
 package com.solace.labs.spring.boot.autoconfigure;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.After;
 import org.junit.Test;
@@ -53,8 +53,8 @@ public class SolaceJavaAutoConfigurationTest {
 		assertEquals("localhost", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("default", (String)session.getProperty(JCSMPProperties.VPN_NAME));
         assertEquals("spring-default-client-username", (String)session.getProperty(JCSMPProperties.USERNAME) );
-        assertNull((String)session.getProperty(JCSMPProperties.PASSWORD));
-        assertNull((String)session.getProperty(JCSMPProperties.CLIENT_NAME));
+        assertEquals("", (String)session.getProperty(JCSMPProperties.PASSWORD));
+        assertNotNull((String)session.getProperty(JCSMPProperties.CLIENT_NAME));
     }
 
 	@Test
