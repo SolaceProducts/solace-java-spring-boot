@@ -35,8 +35,6 @@ public class SpringJCSMPFactory {
      * Acquires a {@link JCSMPSession} implementation for the specified
      * properties in the default <code>Context</code>.
      * 
-     * @param jcsmpProperties
-     *            The properties for the session.
      * @return A {@link JCSMPSession} implementation with the specified
      *         properties.
      * @throws InvalidPropertiesException
@@ -51,8 +49,6 @@ public class SpringJCSMPFactory {
      * Acquires a {@link JCSMPSession} and associates it to the given
      * {@link Context}.
      * 
-     * @param jcsmpProperties
-     *            Session properties to be used for construction of the session.
      * @param context
      *            The <code>Context</code> in which the new session will be
      *            created and associated with. If <code>null</code>, the
@@ -69,8 +65,6 @@ public class SpringJCSMPFactory {
      * Acquires a {@link JCSMPSession} and associates it to the given
      * {@link Context}.
      * 
-     * @param jcsmpProperties
-     *            Session properties to be used for construction of the session.
      * @param context
      *            The <code>Context</code> in which the new session will be
      *            created and associated with. If <code>null</code>, uses the
@@ -86,25 +80,13 @@ public class SpringJCSMPFactory {
         SessionEventHandler eventHandler) throws InvalidPropertiesException {
         return JCSMPFactory.onlyInstance().createSession(jcsmpProperties, context, eventHandler);
     }
-    
-    /**
-     * Acquires a {@link JCSMPDestinationSession} implementation for the specified properties.
-     * 
-     * @param jcsmpProperties The properties for the session.
-     * @return A {@link JCSMPDestinationSession} implementation with the specified properties.
-     * @throws InvalidPropertiesException Is thrown if the required properties
-     *         are not provided, or if unsupported properties (and combinations) are detected.
-     *         
-     * @exclude
-     */
-    public JCSMPDestinationSession createDestinationSession() throws InvalidPropertiesException {
-        return JCSMPFactory.onlyInstance().createDestinationSession(jcsmpProperties);
-    }
 
     /* CONTEXT OPERATIONS */
     /**
      * Returns a reference to the default <code>Context</code>. There is a
      * single instance of a default context in the API.
+     * 
+     * @return The default <code>Context</code> instance.
      */
     public Context getDefaultContext() {
         return JCSMPFactory.onlyInstance().getDefaultContext();
