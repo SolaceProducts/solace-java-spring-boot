@@ -7,6 +7,7 @@
         <groupId>com.solace.labs.spring.boot</groupId>
         <artifactId>solace-java-spring-boot-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     
 	<artifactId>solace-java-spring-boot-starter</artifactId>
