@@ -40,12 +40,6 @@
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
-	<modules>
-		<module>solace-java-sample-app</module>
-		<module>solace-java-spring-boot-autoconfigure</module>
-		<module>solace-java-spring-boot-starter</module>
-	</modules>
-	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -137,6 +131,10 @@
 				<gpg.executable>gpg2</gpg.executable>
 				<gpg.passphrase>Solace1!</gpg.passphrase>
 			</properties>
+			<modules>
+				<module>solace-java-spring-boot-autoconfigure</module>
+				<module>solace-java-spring-boot-starter</module>
+			</modules>
 			<distributionManagement>
 				<snapshotRepository>
 					<id>ossrh</id>
@@ -189,6 +187,11 @@
 					<name>!releaseCentral</name>
 				</property>
 			</activation>
+			<modules>
+				<module>solace-java-sample-app</module>
+				<module>solace-java-spring-boot-autoconfigure</module>
+				<module>solace-java-spring-boot-starter</module>
+			</modules>
 			<distributionManagement>
 				<repository>
 					<id>releases</id>
