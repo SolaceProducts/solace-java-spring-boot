@@ -15,37 +15,6 @@
 	<name>Spring Boot AutoConfiguration :: Solace Java API</name>
 	<description>AutoConfiguration for messaging using the Solace Java API</description>
 	<url>http://dev.solace.com/tech/java-api/</url>
-	
-	<licenses>
-		<license>
-			<name>The Apache License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-		</license>
-	</licenses>
-
-	<developers>
-		<developer>
-			<name>Mark Spielman</name>
-			<email>info@solace.com</email>
-			<organization>Solace</organization>
-			<organizationUrl>http://dev.solace.com</organizationUrl>
-		</developer>
-	</developers>
-
-	<scm>
-		<url>https://github.com/SolaceLabs/solace-java-spring-boot.git</url>
-		<connection>scm:git:git://github.com/SolaceLabs/solace-java-spring-boot.git</connection>
-		<developerConnection>scm:git:git@github.com:SolaceLabs/solace-java-spring-boot.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
-	
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
 
 	<dependencies>
 		<dependency>
