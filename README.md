@@ -16,7 +16,7 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 
 ## Overview
  
-As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API within Spring boot application by enabling dependency injection through the @Autowired annotation. This project is used internally within Solace to enable Spring boot applications and as such it will be maintained and updated as our internal needs required. 
+As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring boot applications and as such it will be maintained and updated as our internal needs required. 
 
 The artifacts are published to Maven Central so it should be familiar and intuitive to use this project in your applications. If you find Solace Java API properties that this project does not yet support, simply raise an issue and we'll look into adding this support or submit a pull request with the update.
 
@@ -56,7 +56,7 @@ compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.0")
 </dependency>
 ```
 
-### Using Spring Dependency Injection (@Autowired)
+### Using Spring Dependency Auto-Configuration (@SpringBootApplication & @Autowired)
 
 Now in your application code, you can simply declare the `SpringJCSMPFactory` and annotate it so that it is autowired: 
 
@@ -71,7 +71,7 @@ Once you have the `SpringJCSMPFactory`, it behaves just like the `JCSMPFactory` 
 final JCSMPSession session = solaceFactory.createSession();
 ```
 
-The `SpringJCSMPFactory` is a wrapper of the singleton `JCSMPFactory` which contains an associated `JCSMPProperties`. This facilitates the dependency injection by Spring but otherwise maintains the familiar `JCSMPFactory` interface known to users of the Solace Java API.
+The `SpringJCSMPFactory` is a wrapper of the singleton `JCSMPFactory` which contains an associated `JCSMPProperties`. This facilitates auto-wiring by Spring but otherwise maintains the familiar `JCSMPFactory` interface known to users of the Solace Java API.
 
 ### Updating your Application Properties
 
