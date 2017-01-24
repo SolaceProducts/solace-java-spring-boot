@@ -85,7 +85,7 @@ solace.java.clientPassword
 solace.java.clientName
 ```
 
-Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR running on their local laptop using `localhost` does not need any properties to start messaging. 
+Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`. 
 
 See [`SolaceJavaProperties`](https://github.com/SolaceLabs/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/labs/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list. Over time the list of supported properties will continue to evolve and grow. If you're missing a particular property, you can easily submit a pull request or raise an issue and we'll add it.
 
