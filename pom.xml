@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.solace.labs.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-parent</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<version>0.1.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Solace Java API Spring Boot AutoConfiguration</name>
-    <description>Parent POM for Solace Java API Spring Boot AutoConfiguration </description>
+	<description>Parent POM for Solace Java API Spring Boot AutoConfiguration </description>
+	<url>https://github.com/SolaceLabs/solace-java-spring-boot</url>
 
 	<licenses>
 		<license>
@@ -30,7 +32,7 @@
 		<developerConnection>scm:git:git@github.com:SolaceLabs/solace-java-spring-boot.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
-		
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -42,10 +44,10 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-			    <groupId>org.springframework.boot</groupId>
-			    <artifactId>spring-boot-dependencies</artifactId>
-			    <version>1.4.3.RELEASE</version>
-			    <type>pom</type>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>1.4.3.RELEASE</version>
+				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
@@ -61,7 +63,7 @@
 			</snapshots>
 		</repository>
 	</repositories>
-	
+
 	<pluginRepositories>
 		<pluginRepository>
 			<id>spring-milestones</id>
@@ -72,7 +74,7 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	
+
 	<build>
 		<plugins>
 			<plugin>

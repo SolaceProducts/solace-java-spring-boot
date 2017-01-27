@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
-        <groupId>com.solace.labs.spring.boot</groupId>
-        <artifactId>solace-java-spring-boot-parent</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
-        <relativePath>../pom.xml</relativePath>
-    </parent>
-	
+		<groupId>com.solace.labs.spring.boot</groupId>
+		<artifactId>solace-java-spring-boot-parent</artifactId>
+		<version>0.1.1-SNAPSHOT</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
+
 	<artifactId>solace-java-spring-boot-autoconfigure</artifactId>
 	<packaging>jar</packaging>
 	<name>Spring Boot AutoConfiguration :: Solace Java API</name>
 	<description>AutoConfiguration for messaging using the Solace Java API</description>
-	<url>http://dev.solace.com/tech/java-api/</url>
+	<url>https://github.com/SolaceLabs/solace-java-spring-boot</url>
 
 	<dependencies>
 		<dependency>
@@ -21,9 +22,9 @@
 			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>com.solacesystems</groupId>
-		    <artifactId>sol-jcsmp</artifactId>
-		    <version>10.0.0</version>
+			<groupId>com.solacesystems</groupId>
+			<artifactId>sol-jcsmp</artifactId>
+			<version>10.0.1</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
