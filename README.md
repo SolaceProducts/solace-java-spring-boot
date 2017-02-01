@@ -26,9 +26,9 @@ One item to note as described below is that this project introduces a new factor
 
 See the associated `solace-java-sample-app` for an example of how this is all put together in a simple application. You'll need to do three steps:
 
-1) Update your build
-1) Autowiring the `SpringJCSMPFactory`.
-1) Configure your `application.properties`.
+1. Update your build
+2. Autowiring the `SpringJCSMPFactory`.
+3. Configure your `application.properties`.
 
 ### Updating your build
 
