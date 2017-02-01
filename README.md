@@ -32,7 +32,7 @@ See the associated `solace-java-sample-app` for an example of how this is all pu
 
 ### Updating your build
 
-This releases from this project are hosted in [Maven Central (Link TODO)](link/todo)
+This releases from this project are hosted in [Maven Central](https://mvnrepository.com/artifact/com.solace.labs.spring.boot/solace-java-spring-boot-starter)
 
 The easiest way to get started is to include the `solace-java-spring-boot-starter` in your application. For an examples see the [Java Sample App](https://github.com/SolaceLabs/solace-java-spring-boot/tree/master/solace-java-sample-app) in this project.
 
