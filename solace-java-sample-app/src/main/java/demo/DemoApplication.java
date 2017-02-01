@@ -36,38 +36,37 @@ import com.solacesystems.jcsmp.Topic;
 import com.solacesystems.jcsmp.XMLMessageConsumer;
 import com.solacesystems.jcsmp.XMLMessageProducer;
 
-@SpringBootApplication 
+@SpringBootApplication
 public class DemoApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
+    @Component
+    static class Runner implements CommandLineRunner {
 
-	@Component
-	static class Runner implements CommandLineRunner {
+        private static final Logger logger = LoggerFactory.getLogger(Runner.class);
 
-		private static final Logger logger = LoggerFactory.getLogger(Runner.class);
+        private final Topic topic = JCSMPFactory.onlyInstance().createTopic("tutorial/topic");
 
-		private final Topic topic = JCSMPFactory.onlyInstance().createTopic("tutorial/topic");
-		
-		@Autowired
-		private SpringJCSMPFactory solaceFactory;
-		
-		private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();
-		private DemoPublishEventHandler pubEventHandler = new DemoPublishEventHandler();
-        
-		
-		@Override
-		public void run(String... strings) throws Exception {
-		    final String msg = "Hello World";
-		    final JCSMPSession session = solaceFactory.createSession();
+        @Autowired
+        private SpringJCSMPFactory solaceFactory;
+
+        private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();
+        private DemoPublishEventHandler pubEventHandler = new DemoPublishEventHandler();
+
+        @Override
+        public void run(String... strings) throws Exception {
+            final String msg = "Hello World";
+            final JCSMPSession session = solaceFactory.createSession();
 
             XMLMessageConsumer cons = session.getMessageConsumer(msgConsumer);
-            
+
             session.addSubscription(topic);
             logger.info("Connected. Awaiting message...");
             cons.start();
+            
             // Consumer session is now hooked up and running!
 
             /** Anonymous inner-class for handling publishing events */
@@ -76,12 +75,13 @@ public class DemoApplication {
 
             TextMessage jcsmpMsg = JCSMPFactory.onlyInstance().createMessage(TextMessage.class);
             jcsmpMsg.setText(msg);
-            
+
             logger.info("============= Sending " + msg);
-            prod.send(jcsmpMsg,topic);
-            
+            prod.send(jcsmpMsg, topic);
+
             try {
-                msgConsumer.getLatch().await(10, TimeUnit.SECONDS); // block here until message received, and latch will flip
+                // block here until message received, and latch will flip
+                msgConsumer.getLatch().await(10, TimeUnit.SECONDS); 
             } catch (InterruptedException e) {
                 logger.error("I was awoken while waiting");
             }
@@ -89,9 +89,6 @@ public class DemoApplication {
             cons.close();
             logger.info("Exiting.");
             session.closeSession();
-		}
-	}
+        }
+    }
 }
-
-
-

@@ -31,10 +31,9 @@ public class DemoPublishEventHandler implements JCSMPStreamingPublishEventHandle
     public void responseReceived(String messageID) {
         logger.info("Producer received response for msg: " + messageID);
     }
-    
+
     @Override
     public void handleError(String messageID, JCSMPException e, long timestamp) {
-        logger.info("Producer received error for msg: %s@%s - %s%n",
-                messageID,timestamp,e);
+        logger.info("Producer received error for msg: %s@%s - %s%n", messageID, timestamp, e);
     }
 }

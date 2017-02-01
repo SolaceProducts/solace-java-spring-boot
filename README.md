@@ -16,7 +16,7 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 
 ## Overview
  
-As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring boot applications and as such it will be maintained and updated as our internal needs required. 
+As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring Boot applications and as such it will be maintained and updated as our internal needs required. 
 
 The artifacts are published to Maven Central so it should be familiar and intuitive to use this project in your applications. If you find Solace Java API properties that this project does not yet support, simply raise an issue and we'll look into adding this support or submit a pull request with the update.
 
@@ -27,8 +27,8 @@ One item to note as described below is that this project introduces a new factor
 See the associated `solace-java-sample-app` for an example of how this is all put together in a simple application. You'll need to do three steps:
 
 1) Update your build
-2) Autowiring the `SpringJCSMPFactory`.
-3) Configure your `application.properties`.
+1) Autowiring the `SpringJCSMPFactory`.
+1) Configure your `application.properties`.
 
 ### Updating your build
 
@@ -42,7 +42,7 @@ Here is how to include the spring boot starter in your project using Gradle and 
 
 ```
 // Solace Java API & auto-configuration
-compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.0")
+compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.1")
 ```
 
 #### Using it with Maven
@@ -52,7 +52,7 @@ compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.0")
 <dependency>
 	<groupId>com.solace.labs.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-starter</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.1</version>
 </dependency>
 ```
 
