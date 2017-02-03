@@ -101,6 +101,12 @@ This will build the auto-configuration jar and associated sample.
 
 Note: As currently setup, the build requires Java 1.8. If you want to use another older version of Java adjust the build accordingly.
 
+## Running the Sample 
+
+The simplest way to run the sample is from the project root folder using maven. For example:
+
+	mvn spring-boot:run
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
