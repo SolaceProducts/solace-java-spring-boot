@@ -27,6 +27,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
 
@@ -53,6 +54,13 @@ public class SolaceJavaAutoConfiguration {
         if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
             jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
         }
+        // Channel Properties
+        JCSMPChannelProperties cp = (JCSMPChannelProperties) jcsmpProps
+                .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
+        cp.setConnectRetries(properties.getConnectRetries());
+        cp.setReconnectRetries(properties.getReconnectRetries());
+        cp.setConnectRetriesPerHost(properties.getConnectRetriesPerHost());
+        cp.setReconnectRetryWaitInMillis(properties.getReconnectRetryWaitInMillis());
         
         SpringJCSMPFactory cf = new SpringJCSMPFactory(jcsmpProps);
         

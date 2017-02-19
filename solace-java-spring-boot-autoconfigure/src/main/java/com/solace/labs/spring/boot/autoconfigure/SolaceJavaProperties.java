@@ -66,6 +66,31 @@ public class SolaceJavaProperties {
      */
     private String clientName;
     
+    /**
+     * The number of times to attempt and retry a connection to the host Solace Message Router (or list of routers) during initial connection setup.
+     */
+    private int connectRetries = 0;
+    
+    /**
+     * The number of times to attempt to reconnect to the host Solace Message Router (or list of routers) after an initial connected session goes down.
+     */
+    private int reconnectRetries = 3;
+    
+    /**
+     * When using a host list for the HOST property, this property defines how many times to try 
+     * to connect or reconnect to a single host before moving to the next host in the list. 
+     * NOTE: This property works in conjunction with the connect and reconnect retries settings; 
+     * it does not replace them.
+     */
+    private int connectRetriesPerHost = 0; 
+    
+    /**
+     * How much time in (MS) to wait between each attempt to connect or reconnect to a host. 
+     * If a connect or reconnect attempt to host is not successful, the API waits for the 
+     * amount of time set for reconnectRetryWaitInMillis, and then makes another connect or 
+     * reconnect attempt.
+     */
+    private int reconnectRetryWaitInMillis = 3000;
     
     public String getHost() {
         return host;
@@ -106,7 +131,37 @@ public class SolaceJavaProperties {
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }
-
     
+    public int getConnectRetries() {
+        return connectRetries;
+    }
+
+    public void setConnectRetries(int connectRetries) {
+        this.connectRetries = connectRetries;
+    }
+    
+    public int getReconnectRetries() {
+        return reconnectRetries;
+    }
+
+    public void setReconnectRetries(int reconnectRetries) {
+        this.reconnectRetries = reconnectRetries;
+    }
+    
+    public int getConnectRetriesPerHost() {
+        return connectRetriesPerHost;
+    }
+
+    public void setConnectRetriesPerHost(int connectRetriesPerHost) {
+        this.connectRetriesPerHost = connectRetriesPerHost;
+    }
+    
+    public int getReconnectRetryWaitInMillis() {
+        return reconnectRetryWaitInMillis;
+    }
+
+    public void setReconnectRetryWaitInMillis(int reconnectRetryWaitInMillis) {
+        this.reconnectRetryWaitInMillis = reconnectRetryWaitInMillis;
+    }
 
 }
