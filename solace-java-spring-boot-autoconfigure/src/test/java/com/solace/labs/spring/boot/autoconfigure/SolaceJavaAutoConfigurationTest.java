@@ -59,9 +59,9 @@ public class SolaceJavaAutoConfigurationTest {
         // Channel properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) session
                 .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
-        assertEquals(0, (int)cp.getConnectRetries());
-        assertEquals(3, (int)cp.getReconnectRetries());
-        assertEquals(0, (int)cp.getConnectRetriesPerHost());
+        assertEquals(1, (int)cp.getConnectRetries());
+        assertEquals(5, (int)cp.getReconnectRetries());
+        assertEquals(20, (int)cp.getConnectRetriesPerHost());
         assertEquals(3000, (int)cp.getReconnectRetryWaitInMillis());
     }
 
@@ -70,8 +70,8 @@ public class SolaceJavaAutoConfigurationTest {
 		load(EmptyConfiguration.class, "solace.java.host=192.168.1.80:55500",
 				"solace.java.clientUsername=bob", "solace.java.clientPassword=password",
 				"solace.java.msgVpn=newVpn", "solace.java.clientName=client-name",
-				"solace.java.connectRetries=1", "solace.java.reconnectRetries=5",
-				"solace.java.connectRetriesPerHost=20", "solace.java.reconnectRetryWaitInMillis=1000");
+				"solace.java.connectRetries=5", "solace.java.reconnectRetries=10",
+				"solace.java.connectRetriesPerHost=40", "solace.java.reconnectRetryWaitInMillis=1000");
 		
 		SpringJCSMPFactory jcsmpFactory = this.context
                 .getBean(SpringJCSMPFactory.class);
@@ -85,9 +85,9 @@ public class SolaceJavaAutoConfigurationTest {
         // Channel properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) session
                 .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
-        assertEquals(1, (int)cp.getConnectRetries());
-        assertEquals(5, (int)cp.getReconnectRetries());
-        assertEquals(20, (int)cp.getConnectRetriesPerHost());
+        assertEquals(5, (int)cp.getConnectRetries());
+        assertEquals(10, (int)cp.getReconnectRetries());
+        assertEquals(40, (int)cp.getConnectRetriesPerHost());
         assertEquals(1000, (int)cp.getReconnectRetryWaitInMillis());
 	}
 
