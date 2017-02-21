@@ -19,23 +19,6 @@
 
 package com.solace.labs.spring.boot.autoconfigure;
 
-/*
- * or more contributor license agreements.  See the NOTICE file
- * distributed with this work for additional information
- * regarding copyright ownership.  The ASF licenses this file
- * to you under the Apache License, Version 2.0 (the
- * "License"); you may not use this file except in compliance
- * with the License.  You may obtain a copy of the License at
- *
- *   http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @ConfigurationProperties("solace.java")
@@ -66,6 +49,43 @@ public class SolaceJavaProperties {
      */
     private String clientName;
     
+    /**
+     * The number of times to attempt and retry a connection to the host Solace Message Router (or list of routers) during initial connection setup.
+     * <p>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     */
+    private int connectRetries = 1;
+    
+    /**
+     * The number of times to attempt to reconnect to the host Solace Message Router (or list of routers) after an initial connected session goes down.
+     * <p>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     */
+    private int reconnectRetries = 5;
+    
+    /**
+     * When using a host list for the HOST property, this property defines how many times to try 
+     * to connect or reconnect to a single host before moving to the next host in the list. 
+     * NOTE: This property works in conjunction with the connect and reconnect retries settings; 
+     * it does not replace them.
+     * <p>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     */
+    private int connectRetriesPerHost = 20; 
+    
+    /**
+     * How much time in (MS) to wait between each attempt to connect or reconnect to a host. 
+     * If a connect or reconnect attempt to host is not successful, the API waits for the 
+     * amount of time set for reconnectRetryWaitInMillis, and then makes another connect or 
+     * reconnect attempt.
+     * <p>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     */
+    private int reconnectRetryWaitInMillis = 3000;
     
     public String getHost() {
         return host;
@@ -106,7 +126,37 @@ public class SolaceJavaProperties {
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }
-
     
+    public int getConnectRetries() {
+        return connectRetries;
+    }
+
+    public void setConnectRetries(int connectRetries) {
+        this.connectRetries = connectRetries;
+    }
+    
+    public int getReconnectRetries() {
+        return reconnectRetries;
+    }
+
+    public void setReconnectRetries(int reconnectRetries) {
+        this.reconnectRetries = reconnectRetries;
+    }
+    
+    public int getConnectRetriesPerHost() {
+        return connectRetriesPerHost;
+    }
+
+    public void setConnectRetriesPerHost(int connectRetriesPerHost) {
+        this.connectRetriesPerHost = connectRetriesPerHost;
+    }
+    
+    public int getReconnectRetryWaitInMillis() {
+        return reconnectRetryWaitInMillis;
+    }
+
+    public void setReconnectRetryWaitInMillis(int reconnectRetryWaitInMillis) {
+        this.reconnectRetryWaitInMillis = reconnectRetryWaitInMillis;
+    }
 
 }

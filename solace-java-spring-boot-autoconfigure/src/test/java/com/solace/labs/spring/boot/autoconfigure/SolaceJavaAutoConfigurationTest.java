@@ -28,6 +28,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Configuration;
 
 import com.solacesystems.jcsmp.InvalidPropertiesException;
+import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
@@ -55,13 +56,22 @@ public class SolaceJavaAutoConfigurationTest {
         assertEquals("spring-default-client-username", (String)session.getProperty(JCSMPProperties.USERNAME) );
         assertEquals("", (String)session.getProperty(JCSMPProperties.PASSWORD));
         assertNotNull((String)session.getProperty(JCSMPProperties.CLIENT_NAME));
+        // Channel properties
+        JCSMPChannelProperties cp = (JCSMPChannelProperties) session
+                .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
+        assertEquals(1, (int)cp.getConnectRetries());
+        assertEquals(5, (int)cp.getReconnectRetries());
+        assertEquals(20, (int)cp.getConnectRetriesPerHost());
+        assertEquals(3000, (int)cp.getReconnectRetryWaitInMillis());
     }
 
 	@Test
 	public void customNativeConnectionFactory() throws InvalidPropertiesException {
 		load(EmptyConfiguration.class, "solace.java.host=192.168.1.80:55500",
 				"solace.java.clientUsername=bob", "solace.java.clientPassword=password",
-				"solace.java.msgVpn=newVpn", "solace.java.clientName=client-name");
+				"solace.java.msgVpn=newVpn", "solace.java.clientName=client-name",
+				"solace.java.connectRetries=5", "solace.java.reconnectRetries=10",
+				"solace.java.connectRetriesPerHost=40", "solace.java.reconnectRetryWaitInMillis=1000");
 		
 		SpringJCSMPFactory jcsmpFactory = this.context
                 .getBean(SpringJCSMPFactory.class);
@@ -72,6 +82,13 @@ public class SolaceJavaAutoConfigurationTest {
         assertEquals("bob", (String)session.getProperty(JCSMPProperties.USERNAME) );
         assertEquals("password", (String)session.getProperty(JCSMPProperties.PASSWORD) );
         assertEquals("client-name", (String)session.getProperty(JCSMPProperties.CLIENT_NAME) );
+        // Channel properties
+        JCSMPChannelProperties cp = (JCSMPChannelProperties) session
+                .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
+        assertEquals(5, (int)cp.getConnectRetries());
+        assertEquals(10, (int)cp.getReconnectRetries());
+        assertEquals(40, (int)cp.getConnectRetriesPerHost());
+        assertEquals(1000, (int)cp.getReconnectRetryWaitInMillis());
 	}
 
 
