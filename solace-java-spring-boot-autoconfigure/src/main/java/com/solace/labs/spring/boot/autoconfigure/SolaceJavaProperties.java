@@ -52,7 +52,7 @@ public class SolaceJavaProperties {
     /**
      * The number of times to attempt and retry a connection to the host Solace Message Router (or list of routers) during initial connection setup.
      * <p>
-     * This property is optional and defaults to the recommended value as per the Solace Messaging API documentation.
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
      * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
      */
     private int connectRetries = 1;
@@ -60,7 +60,7 @@ public class SolaceJavaProperties {
     /**
      * The number of times to attempt to reconnect to the host Solace Message Router (or list of routers) after an initial connected session goes down.
      * <p>
-     * This property is optional and defaults to the recommended value as per the Solace Messaging API documentation.
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
      * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetries = 5;
@@ -71,7 +71,7 @@ public class SolaceJavaProperties {
      * NOTE: This property works in conjunction with the connect and reconnect retries settings; 
      * it does not replace them.
      * <p>
-     * This property is optional and defaults to the recommended value as per the Solace Messaging API documentation.
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
      * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
      */
     private int connectRetriesPerHost = 20; 
@@ -82,7 +82,7 @@ public class SolaceJavaProperties {
      * amount of time set for reconnectRetryWaitInMillis, and then makes another connect or 
      * reconnect attempt.
      * <p>
-     * This property is optional and defaults to the recommended value as per the Solace Messaging API documentation.
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
      * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetryWaitInMillis = 3000;
