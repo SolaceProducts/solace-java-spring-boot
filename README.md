@@ -5,7 +5,7 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 ## Contents
 
 * [Overview](#overview)
-* [Using Auto-Configurion in your App](#using-auto-configuration-in-your-app)
+* [Using Auto-Configuration in your App](#using-auto-configuration-in-your-app)
 * [Building the Project Yourself](#building-the-project-yourself)
 * [Contributing](#contributing)
 * [Authors](#authors)
