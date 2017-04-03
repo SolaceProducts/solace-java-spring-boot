@@ -21,6 +21,10 @@ package com.solace.labs.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
+
 @ConfigurationProperties("solace.java")
 public class SolaceJavaProperties {
 
@@ -86,6 +90,35 @@ public class SolaceJavaProperties {
      * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetryWaitInMillis = 3000;
+
+    /**
+     * Indicates whether the acknowledgement of a received guaranteed message is done by the
+     * the API or by application explicitly calling ackMessage() on the received message
+     * <p>
+     * Possible values are: <p>
+     * <ul>
+     * <li>auto_ack</li>
+     * <li>client_ack</li>
+     * </ul>
+     * Default value: auto_ack
+     */
+    private String messageAckMode = "auto_ack";
+
+    /**
+     * If enabled, the API maintains a local cache of subscriptions and reapplies
+     * them when the subscriber connection is reestablished.
+     * <p>
+     * Reapply subscriptions will only apply direct topic subscriptions unpon a Session reconnect.
+     * It will not reapply topic subscriptions on durable and non-durable endpoints
+     * <p>
+     * Default: false
+     */
+    private boolean reapplySubscriptions = false;
+
+    /**
+     * Reserved attributes used by internal clients of the messaging API
+     */
+    private Properties reserved = new Properties();
     
     public String getHost() {
         return host;
@@ -159,4 +192,27 @@ public class SolaceJavaProperties {
         this.reconnectRetryWaitInMillis = reconnectRetryWaitInMillis;
     }
 
+    public void setMessageAckMode(String messageAckMode) {
+        this.messageAckMode = messageAckMode;
+    }
+
+    public String getMessageAckMode() {
+        return this.messageAckMode;
+    }
+
+    public boolean getReapplySubscriptions() {
+        return this.reapplySubscriptions;
+    }
+
+    public void setReapplySubscriptions(boolean reapplySubscriptions) {
+        this.reapplySubscriptions = reapplySubscriptions;
+    }
+
+    public void setReserved(Properties value) {
+        this.reserved = value;
+    }
+
+    public Properties getReserved() {
+        return this.reserved;
+    }
 }

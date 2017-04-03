@@ -55,6 +55,8 @@ public class SolaceJavaAutoConfigurationTest {
         assertEquals("default", (String)session.getProperty(JCSMPProperties.VPN_NAME));
         assertEquals("spring-default-client-username", (String)session.getProperty(JCSMPProperties.USERNAME) );
         assertEquals("", (String)session.getProperty(JCSMPProperties.PASSWORD));
+        assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_AUTO,(String)session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
+        assertEquals(Boolean.FALSE,(Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
         assertNotNull((String)session.getProperty(JCSMPProperties.CLIENT_NAME));
         // Channel properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) session
@@ -71,7 +73,9 @@ public class SolaceJavaAutoConfigurationTest {
 				"solace.java.clientUsername=bob", "solace.java.clientPassword=password",
 				"solace.java.msgVpn=newVpn", "solace.java.clientName=client-name",
 				"solace.java.connectRetries=5", "solace.java.reconnectRetries=10",
-				"solace.java.connectRetriesPerHost=40", "solace.java.reconnectRetryWaitInMillis=1000");
+				"solace.java.connectRetriesPerHost=40", "solace.java.reconnectRetryWaitInMillis=1000",
+				"solace.java.messageAckMode=client_ack","solace.java.reapplySubscriptions=true",
+				"solace.java.reserved.jcsmp.TOPIC_DISPATCH=true");
 		
 		SpringJCSMPFactory jcsmpFactory = this.context
                 .getBean(SpringJCSMPFactory.class);
@@ -82,6 +86,9 @@ public class SolaceJavaAutoConfigurationTest {
         assertEquals("bob", (String)session.getProperty(JCSMPProperties.USERNAME) );
         assertEquals("password", (String)session.getProperty(JCSMPProperties.PASSWORD) );
         assertEquals("client-name", (String)session.getProperty(JCSMPProperties.CLIENT_NAME) );
+		assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_CLIENT,(String)session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
+		assertEquals(Boolean.TRUE,(Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
+		assertEquals(Boolean.TRUE,(Boolean) session.getProperty(JCSMPProperties.TOPIC_DISPATCH));
         // Channel properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) session
                 .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);

@@ -30,6 +30,7 @@ import org.springframework.context.annotation.Configuration;
 import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
+import java.util.Properties;
 
 @Configuration
 @AutoConfigureBefore(JmsAutoConfiguration.class)
@@ -45,12 +46,14 @@ public class SolaceJavaAutoConfiguration {
 	public SpringJCSMPFactory connectionFactory() {
 	    
 	
-        JCSMPProperties jcsmpProps = new JCSMPProperties();
+        JCSMPProperties jcsmpProps = createFromReserved(properties.getReserved());
         
         jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
         jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
         jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());
         jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
+        jcsmpProps.setProperty(JCSMPProperties.MESSAGE_ACK_MODE,properties.getMessageAckMode());
+        jcsmpProps.setProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS,properties.getReapplySubscriptions());
         if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
             jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
         }
@@ -61,10 +64,19 @@ public class SolaceJavaAutoConfiguration {
         cp.setReconnectRetries(properties.getReconnectRetries());
         cp.setConnectRetriesPerHost(properties.getConnectRetriesPerHost());
         cp.setReconnectRetryWaitInMillis(properties.getReconnectRetryWaitInMillis());
-        
+
+        // Create the SpringJCSMPFactory
         SpringJCSMPFactory cf = new SpringJCSMPFactory(jcsmpProps);
         
 	    return cf;
 	}
+
+	private JCSMPProperties createFromReserved(Properties reserved) {
+        if (reserved != null) {
+            return JCSMPProperties.fromProperties(reserved);
+        } else {
+            return new JCSMPProperties();
+        }
+    }
 
 }
