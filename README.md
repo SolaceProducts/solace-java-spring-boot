@@ -85,6 +85,8 @@ solace.java.msgVpn
 solace.java.clientUsername
 solace.java.clientPassword
 solace.java.clientName
+solace.java.messageAckMode
+solace.java.reapplySubscriptions
 ```
 
 Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`. 
