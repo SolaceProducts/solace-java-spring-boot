@@ -46,7 +46,7 @@ public class SolaceJavaAutoConfiguration {
 	public SpringJCSMPFactory connectionFactory() {
 	    
 	
-        JCSMPProperties jcsmpProps = createFromReserved(properties.getAdvanced());
+        JCSMPProperties jcsmpProps = createFromAdvanced(properties.getAdvanced());
         
         jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
         jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
@@ -71,9 +71,9 @@ public class SolaceJavaAutoConfiguration {
 	    return cf;
 	}
 
-	private JCSMPProperties createFromReserved(Properties reserved) {
-        if (reserved != null) {
-            return JCSMPProperties.fromProperties(reserved);
+	private JCSMPProperties createFromAdvanced(Properties advanced) {
+        if (advanced != null) {
+            return JCSMPProperties.fromProperties(advanced);
         } else {
             return new JCSMPProperties();
         }
