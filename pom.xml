@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.solace.labs.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-parent</artifactId>
-	<version>0.1.3</version>
+	<version>0.1.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Solace Java API Spring Boot AutoConfiguration</name>
 	<description>Parent POM for Solace Java API Spring Boot AutoConfiguration </description>
@@ -29,7 +29,7 @@
 		<url>https://github.com/SolaceLabs/solace-java-spring-boot.git</url>
 		<connection>scm:git:git://github.com/SolaceLabs/solace-java-spring-boot.git</connection>
 		<developerConnection>scm:git:git@github.com:SolaceLabs/solace-java-spring-boot.git</developerConnection>
-		<tag>0.1.3</tag>
+		<tag>HEAD</tag>
 	</scm>
 
 	<properties>
