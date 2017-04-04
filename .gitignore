@@ -4,3 +4,5 @@
 bin/
 .factorypath
 solace-java-spring-boot-autoconfigure/.factorypath
+.idea
+*.iml

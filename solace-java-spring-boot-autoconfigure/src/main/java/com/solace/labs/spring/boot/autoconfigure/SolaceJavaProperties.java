@@ -21,8 +21,6 @@ package com.solace.labs.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 
 @ConfigurationProperties("solace.java")
@@ -116,9 +114,11 @@ public class SolaceJavaProperties {
     private boolean reapplySubscriptions = false;
 
     /**
-     * Reserved attributes used by internal clients of the messaging API
+     * Advanced attributes that can be set by the attribute naming convention used in
+     * fromProperties() and toProperties() in
+     * @see <a href="http://docs.solace.com/API-Developer-Online-Ref-Documentation/java/index.html"> JCSMPProperties</a>
      */
-    private Properties reserved = new Properties();
+    private Properties advanced = new Properties();
     
     public String getHost() {
         return host;
@@ -208,11 +208,11 @@ public class SolaceJavaProperties {
         this.reapplySubscriptions = reapplySubscriptions;
     }
 
-    public void setReserved(Properties value) {
-        this.reserved = value;
+    public void setAdvanced(Properties value) {
+        this.advanced = value;
     }
 
-    public Properties getReserved() {
-        return this.reserved;
+    public Properties getAdvanced() {
+        return this.advanced;
     }
 }

@@ -75,7 +75,7 @@ public class SolaceJavaAutoConfigurationTest {
 				"solace.java.connectRetries=5", "solace.java.reconnectRetries=10",
 				"solace.java.connectRetriesPerHost=40", "solace.java.reconnectRetryWaitInMillis=1000",
 				"solace.java.messageAckMode=client_ack","solace.java.reapplySubscriptions=true",
-				"solace.java.reserved.jcsmp.TOPIC_DISPATCH=true");
+				"solace.java.advanced.jcsmp.TOPIC_DISPATCH=true");
 		
 		SpringJCSMPFactory jcsmpFactory = this.context
                 .getBean(SpringJCSMPFactory.class);
