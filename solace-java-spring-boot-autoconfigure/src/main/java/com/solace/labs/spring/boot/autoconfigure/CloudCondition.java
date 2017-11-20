@@ -10,9 +10,14 @@ public class CloudCondition implements Condition {
 	@Override
 	public boolean matches(ConditionContext context, AnnotatedTypeMetadata annoMetaData) {
 		Environment env =  context.getEnvironment();
-		if (env.getProperty("VCAP_APPLICATION") != null)
-		{
-			return true;
+		String VCAP_APPLICATION = env.getProperty("VCAP_APPLICATION"); 
+		if ( VCAP_APPLICATION != null  ) {
+			String VCAP_SERVICES = env.getProperty("VCAP_SERVICES"); 
+			if( VCAP_SERVICES != null && VCAP_SERVICES.contains("solace-messaging") ) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 		return false;
 	}

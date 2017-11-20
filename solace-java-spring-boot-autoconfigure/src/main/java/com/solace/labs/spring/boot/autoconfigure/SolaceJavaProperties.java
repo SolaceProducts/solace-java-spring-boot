@@ -32,17 +32,21 @@ public class SolaceJavaProperties {
     private String host = "localhost";
 
     /**
-     * Solace Message Router Message-VPN
+     * Solace Message Router Message-VPN.
      */
     private String msgVpn = "default";
     
     /**
-     * Solace Message Router Client Username
+     * Solace Message Router Client Username.
+     * This field is always used in non cloud deployments.
+     * Under a cloud deployment this field is used when the cloud expected value was not provided (null).
      */
     private String clientUsername = "spring-default-client-username";
     
     /**
-     * Solace Message Router Client Password
+     * Solace Message Router Client Password.
+     * This field is always used in non cloud deployments.
+     * Under a cloud deployment this field is used when the cloud expected value was not provided (null).
      */
     private String clientPassword;
     

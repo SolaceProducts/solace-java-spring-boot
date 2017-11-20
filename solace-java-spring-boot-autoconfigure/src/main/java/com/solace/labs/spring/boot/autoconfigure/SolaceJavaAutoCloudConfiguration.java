@@ -21,7 +21,6 @@ package com.solace.labs.spring.boot.autoconfigure;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -61,17 +60,17 @@ public class SolaceJavaAutoCloudConfiguration {
 		SolaceMessagingInfo solacemessaging = null;
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
 		for (ServiceInfo serviceInfo : serviceInfos) {
+		    // Stop when we find the first one...
+		    // TODO: Consider annotation driven selection, or sorted plan based selection
 		    if (serviceInfo instanceof SolaceMessagingInfo) {
 		        solacemessaging = (SolaceMessagingInfo) serviceInfo;
-		    	logger.info("Found Cloud Solace Messaging Info" + solacemessaging);
-		    }
-		    // Stop when we find the first one...
-		    // TODO: Consider annotation driven selection
-		    if( solacemessaging != null )
+		    	logger.info("Found Cloud Solace Messaging Service Instance Id: " + solacemessaging.getId());
 		    	break;
+		    }
 		}
 		
 		if( solacemessaging == null ) {
+			// The CloudCondition should shield from this happening, should not arrive to this state. 
 			logger.error("Cloud Solace Messaging Info was not found, cannot auto-configure");
             throw new IllegalStateException("Unable to create SpringJCSMPFactory did not find SolaceMessagingInfo in the current cloud environment");
 	    }
@@ -114,9 +113,7 @@ public class SolaceJavaAutoCloudConfiguration {
         cp.setReconnectRetryWaitInMillis(properties.getReconnectRetryWaitInMillis());
 
         // Create the SpringJCSMPFactory
-        SpringJCSMPFactory cf = new SpringJCSMPFactory(jcsmpProps);
-        
-	    return cf;
+        return new SpringJCSMPFactory(jcsmpProps);
 	}
 
 	private JCSMPProperties createFromAdvanced(Properties advanced) {
