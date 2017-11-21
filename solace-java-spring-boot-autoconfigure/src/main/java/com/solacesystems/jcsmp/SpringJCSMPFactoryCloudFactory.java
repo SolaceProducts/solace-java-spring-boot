@@ -32,7 +32,7 @@ public interface SpringJCSMPFactoryCloudFactory {
 	/**
 	 * Lists All Cloud Environment detected Solace Messaging services
 	 * 
-	 * @return
+	 * @return List of all Cloud Environment detected Solace Messaging services
 	 */
 	public List<SolaceMessagingInfo> getSolaceMessagingInfos();
 
@@ -40,7 +40,8 @@ public interface SpringJCSMPFactoryCloudFactory {
 	 * Returns a SpringJCSMPFactory based on the first detected
 	 * SolaceMessagingInfo
 	 * 
-	 * @return
+	 * @return SpringJCSMPFactory based on the first detected
+	 *         SolaceMessagingInfo
 	 */
 	public SpringJCSMPFactory getSpringJCSMPFactory();
 
@@ -48,7 +49,7 @@ public interface SpringJCSMPFactoryCloudFactory {
 	 * Returns a SpringJCSMPFactory based on the given SolaceMessagingInfo
 	 * 
 	 * @param solaceMessagingInfo
-	 * @return
+	 * @return SpringJCSMPFactory based on the given SolaceMessagingInfo
 	 */
 	public SpringJCSMPFactory getSpringJCSMPFactory(SolaceMessagingInfo solaceMessagingInfo);
 

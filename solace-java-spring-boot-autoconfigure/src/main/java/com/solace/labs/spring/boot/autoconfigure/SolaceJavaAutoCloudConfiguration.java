@@ -52,15 +52,17 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 
 	private static final Logger logger = LoggerFactory.getLogger(SolaceJavaAutoCloudConfiguration.class);
 
+	private CloudFactory cloudFactory = new CloudFactory();
+
 	@Autowired
 	private SolaceJavaProperties properties;
 
 	@Bean
 	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
 		List<SolaceMessagingInfo> solaceMessagingInfoList = new ArrayList<>();
-
-		CloudFactory cloudFactory = new CloudFactory();
+		
 		Cloud cloud = cloudFactory.getCloud();
+		
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
 		for (ServiceInfo serviceInfo : serviceInfos) {
 			if (serviceInfo instanceof SolaceMessagingInfo) {
@@ -72,9 +74,8 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 
 	@Bean
 	public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
-		CloudFactory cloudFactory = new CloudFactory();
-		Cloud cloud = cloudFactory.getCloud();
 		SolaceMessagingInfo solacemessaging = null;
+		Cloud cloud = cloudFactory.getCloud();
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
 		for (ServiceInfo serviceInfo : serviceInfos) {
 			// Stop when we find the first one...

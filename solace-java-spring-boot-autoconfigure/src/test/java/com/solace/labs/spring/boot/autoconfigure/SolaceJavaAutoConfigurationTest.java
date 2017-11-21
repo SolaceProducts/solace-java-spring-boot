@@ -49,7 +49,10 @@ public class SolaceJavaAutoConfigurationTest {
 		load(EmptyConfiguration.class, "");
 		SpringJCSMPFactory jcsmpFactory = this.context
 				.getBean(SpringJCSMPFactory.class);
+		assertNotNull(jcsmpFactory);
+		
 		JCSMPSession session = jcsmpFactory.createSession();
+		assertNotNull(session);
 		
 		assertEquals("localhost", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("default", (String)session.getProperty(JCSMPProperties.VPN_NAME));
@@ -79,7 +82,9 @@ public class SolaceJavaAutoConfigurationTest {
 		
 		SpringJCSMPFactory jcsmpFactory = this.context
                 .getBean(SpringJCSMPFactory.class);
+		assertNotNull(jcsmpFactory);
         JCSMPSession session = jcsmpFactory.createSession();
+        assertNotNull(session);
         
         assertEquals("192.168.1.80:55500", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("newVpn", (String)session.getProperty(JCSMPProperties.VPN_NAME));

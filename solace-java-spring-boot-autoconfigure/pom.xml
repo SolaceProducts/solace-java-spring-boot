@@ -49,6 +49,13 @@
 		  <artifactId>solace-labs-spring-cloud-connector</artifactId>
 		  <version>1.3.0-SNAPSHOT</version>		  
 		</dependency>
-				
+
+		<dependency>
+		  <groupId>com.github.stefanbirkner</groupId>
+		  <artifactId>system-rules</artifactId>
+		  <version>1.16.0</version>
+		  <scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>
