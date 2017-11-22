@@ -79,18 +79,26 @@ public class SolaceJavaAutoCloudConfigurationTest {
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
 	public void notCloudNoSpringJCSMPFactoryCloudFactory() throws NoSuchBeanDefinitionException {
-		load(EmptyCloudConfiguration.class, "");
+		try {
+			load(EmptyCloudConfiguration.class, "");
 
 		this.context.getBean(SpringJCSMPFactoryCloudFactory.class);
-
+		} catch(NoSuchBeanDefinitionException e) {
+			assertTrue(e.getBeanType().isAssignableFrom(com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory.class));
+			throw e;
+		}
 	}
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
 	public void notCloudNoSpringJCSMPFactory() throws NoSuchBeanDefinitionException {
 		load(EmptyCloudConfiguration.class, "");
 
-		this.context.getBean(SpringJCSMPFactory.class);
-
+		try {
+			this.context.getBean(SpringJCSMPFactory.class);
+		} catch(NoSuchBeanDefinitionException e) {
+			assertTrue(e.getBeanType().isAssignableFrom(com.solacesystems.jcsmp.SpringJCSMPFactory.class));
+			throw e;
+		}
 	}
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
@@ -105,7 +113,12 @@ public class SolaceJavaAutoCloudConfigurationTest {
 		String VCAP_SERVICES = env.getProperty("VCAP_SERVICES");
 		assertNull(VCAP_SERVICES);
 
+		try {
 		this.context.getBean(SpringJCSMPFactory.class);
+		} catch(NoSuchBeanDefinitionException e) {
+			assertTrue(e.getBeanType().isAssignableFrom(com.solacesystems.jcsmp.SpringJCSMPFactory.class));
+			throw e;
+		}
 	}
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
@@ -120,8 +133,12 @@ public class SolaceJavaAutoCloudConfigurationTest {
 		String VCAP_SERVICES = env.getProperty("VCAP_SERVICES");
 		assertNull(VCAP_SERVICES);
 
-		this.context.getBean(SpringJCSMPFactoryCloudFactory.class);
-
+		try {
+			this.context.getBean(SpringJCSMPFactoryCloudFactory.class);
+		} catch(NoSuchBeanDefinitionException e) {
+			assertTrue(e.getBeanType().isAssignableFrom(com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory.class));
+			throw e;
+		}
 	}
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
@@ -137,7 +154,12 @@ public class SolaceJavaAutoCloudConfigurationTest {
 		assertNotNull(VCAP_SERVICES);
 		assertFalse(VCAP_SERVICES.contains("solace-messaging"));
 
-		this.context.getBean(SpringJCSMPFactory.class);
+		try {
+			this.context.getBean(SpringJCSMPFactory.class);
+		} catch(NoSuchBeanDefinitionException e) {
+			assertTrue(e.getBeanType().isAssignableFrom(com.solacesystems.jcsmp.SpringJCSMPFactory.class));
+			throw e;
+		}
 	}
 
 	@Test(expected = NoSuchBeanDefinitionException.class)
@@ -153,7 +175,12 @@ public class SolaceJavaAutoCloudConfigurationTest {
 		assertNotNull(VCAP_SERVICES);
 		assertFalse(VCAP_SERVICES.contains("solace-messaging"));
 
-		this.context.getBean(SpringJCSMPFactoryCloudFactory.class);
+		try {
+			this.context.getBean(SpringJCSMPFactoryCloudFactory.class);
+		} catch(NoSuchBeanDefinitionException e) {
+			assertTrue(e.getBeanType().isAssignableFrom(com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory.class));
+			throw e;
+		}
 
 	}
 	
