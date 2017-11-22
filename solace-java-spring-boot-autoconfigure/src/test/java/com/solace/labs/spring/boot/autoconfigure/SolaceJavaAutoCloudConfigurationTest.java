@@ -61,13 +61,6 @@ public class SolaceJavaAutoCloudConfigurationTest {
 	// Some other Service
 	private static String CF_VCAP_SERVICES_OTHER = "VCAP_SERVICES={ otherService: [ { id: '1' } , { id: '2' } ]}";
 
-	// A very sparse solace-messaging service
-	// private static String CF_VCAP_SERVICES_SOLACE_MESSAGING1 =
-	// "VCAP_SERVICES={ solace-messaging: [ { name: 'instanceID', label:
-	// 'solace-messaging', credentials: { smfHosts: ['tcp://localhost'] ,
-	// msgVpnName: 'msgVpnName', clientUsername: 'clientUsername',
-	// clientPassword: 'clientPassword' } } ]}";
-
 	CloudCondition cloudCondition = new CloudCondition();
 
 	@After
