@@ -43,7 +43,11 @@
 			<artifactId>spring-cloud-core</artifactId>
 			<optional>true</optional>
 		</dependency>
-					
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 		<dependency>
 		  <groupId>com.solace.labs.cloud.cloudfoundry</groupId>
 		  <artifactId>solace-labs-spring-cloud-connector</artifactId>
