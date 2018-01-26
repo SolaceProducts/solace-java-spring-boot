@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/SolaceLabs/solace-java-spring-boot.svg?branch=master)](https://travis-ci.org/SolaceLabs/solace-java-spring-boot)
+[![Build Status](https://travis-ci.org/SolaceProducts/solace-java-spring-boot.svg?branch=master)](https://travis-ci.org/SolaceProducts/solace-java-spring-boot)
 
 # Spring Boot Auto-Configuration for the Solace Java API
 
@@ -34,9 +34,9 @@ See the associated `solace-java-sample-app` for an example of how this is all pu
 
 ### Updating your build
 
-This releases from this project are hosted in [Maven Central](https://mvnrepository.com/artifact/com.solace.labs.spring.boot/solace-java-spring-boot-starter)
+This releases from this project are hosted in [Maven Central](https://mvnrepository.com/artifact/com.solace.spring.boot/solace-java-spring-boot-starter)
 
-The easiest way to get started is to include the `solace-java-spring-boot-starter` in your application. For an examples see the [Java Sample App](https://github.com/SolaceLabs/solace-java-spring-boot/tree/master/solace-java-sample-app) in this project.
+The easiest way to get started is to include the `solace-java-spring-boot-starter` in your application. For an examples see the [Java Sample App](https://github.com/SolaceProducts/solace-java-spring-boot/tree/master/solace-java-sample-app) in this project.
 
 Here is how to include the spring boot starter in your project using Gradle and Maven.
 
@@ -44,7 +44,7 @@ Here is how to include the spring boot starter in your project using Gradle and 
 
 ```
 // Solace Java API & auto-configuration
-compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.1")
+compile("com.solace.spring.boot:solace-java-spring-boot-starter:0.1.1")
 ```
 
 #### Using it with Maven
@@ -52,7 +52,7 @@ compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.1")
 ```
 <!-- Solace Java API & auto-configuration-->
 <dependency>
-	<groupId>com.solace.labs.spring.boot</groupId>
+	<groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-starter</artifactId>
 	<version>0.1.1</version>
 </dependency>
@@ -91,13 +91,13 @@ solace.java.reapplySubscriptions
 
 Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`. 
 
-See [`SolaceJavaProperties`](https://github.com/SolaceLabs/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/labs/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list. Over time the list of supported properties will continue to evolve and grow. If you're missing a particular property, you can easily submit a pull request or raise an issue and we'll add it.
+See [`SolaceJavaProperties`](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list. Over time the list of supported properties will continue to evolve and grow. If you're missing a particular property, you can easily submit a pull request or raise an issue and we'll add it.
 
 ## Building the Project Yourself 
 
 This project depends on maven for building. To build the jar locally, check out the project and build from source by doing the following:
 
-    git clone https://github.com/SolaceLabs/solace-java-spring-boot.git
+    git clone https://github.com/SolaceProducts/solace-java-spring-boot.git
     cd solace-java-spring-boot
     mvn package
 
@@ -117,7 +117,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 
-See the list of [contributors](https://github.com/SolaceLabs/solace-java-spring-boot/graphs/contributors) who participated in this project.
+See the list of [contributors](https://github.com/SolaceProducts/solace-java-spring-boot/graphs/contributors) who participated in this project.
 
 ## License
 

@@ -1,4 +1,4 @@
-package com.solace.labs.spring.boot.autoconfigure;
+package com.solace.spring.boot.autoconfigure;
 
 import org.springframework.context.annotation.Condition;
 import org.springframework.context.annotation.ConditionContext;
