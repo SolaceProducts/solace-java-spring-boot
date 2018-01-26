@@ -21,7 +21,7 @@ package com.solacesystems.jcsmp;
 
 import java.util.List;
 
-import com.solace.labs.spring.cloud.core.SolaceMessagingInfo;
+import com.solace.spring.cloud.core.SolaceMessagingInfo;
 
 /**
  * A Factory for SpringJCSMPFactory to Support Cloud Environments having
