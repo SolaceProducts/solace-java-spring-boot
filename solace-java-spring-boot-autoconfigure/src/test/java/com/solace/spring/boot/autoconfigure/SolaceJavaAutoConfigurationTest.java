@@ -91,9 +91,6 @@ public class SolaceJavaAutoConfigurationTest {
         assertEquals("bob", (String)session.getProperty(JCSMPProperties.USERNAME) );
         assertEquals("password", (String)session.getProperty(JCSMPProperties.PASSWORD) );
         assertEquals("client-name", (String)session.getProperty(JCSMPProperties.CLIENT_NAME) );
-		assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_CLIENT,(String)session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
-		assertEquals(Boolean.TRUE,(Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
-		assertEquals(Boolean.TRUE,(Boolean) session.getProperty(JCSMPProperties.TOPIC_DISPATCH));
         // Channel properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) session
                 .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);

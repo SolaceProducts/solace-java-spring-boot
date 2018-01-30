@@ -20,7 +20,9 @@ package com.solace.spring.boot.autoconfigure;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -107,10 +109,22 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 	@Override
 	public SpringJCSMPFactory getSpringJCSMPFactory(SolaceMessagingInfo solacemessaging) {
 
-		JCSMPProperties jcsmpProps = createFromAdvanced(properties.getAdvanced());
+		Properties p = new Properties();
+        Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
+        for (Map.Entry<String,String> entry : set) {
+            p.put("jcsmp." + entry.getKey(), entry.getValue());
+        }
+        JCSMPProperties jcsmpProps = createFromApiProperties(p);
 
-		jcsmpProps.setProperty(JCSMPProperties.HOST, solacemessaging.getSmfHost());
-		jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, solacemessaging.getMsgVpnName());
+		if (solacemessaging.getSmfHost() != null)
+			jcsmpProps.setProperty(JCSMPProperties.HOST, solacemessaging.getSmfHost());
+		else
+			jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
+
+		if (solacemessaging.getMsgVpnName() != null)
+			jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, solacemessaging.getMsgVpnName());
+		else
+			jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
 
 		if (solacemessaging.getClientPassword() != null)
 			jcsmpProps.setProperty(JCSMPProperties.USERNAME, solacemessaging.getClientUsername());
@@ -121,9 +135,6 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 			jcsmpProps.setProperty(JCSMPProperties.PASSWORD, solacemessaging.getClientPassword());
 		else
 			jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
-
-		jcsmpProps.setProperty(JCSMPProperties.MESSAGE_ACK_MODE, properties.getMessageAckMode());
-		jcsmpProps.setProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS, properties.getReapplySubscriptions());
 
 		if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
 			jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
@@ -141,12 +152,12 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 		return new SpringJCSMPFactory(jcsmpProps);
 	}
 
-	private JCSMPProperties createFromAdvanced(Properties advanced) {
-		if (advanced != null) {
-			return JCSMPProperties.fromProperties(advanced);
-		} else {
-			return new JCSMPProperties();
-		}
-	}
+	private JCSMPProperties createFromApiProperties(Properties apiProps) {
+        if (apiProps != null) {
+            return JCSMPProperties.fromProperties(apiProps);
+        } else {
+            return new JCSMPProperties();
+        }
+    }
 
 }
