@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.solace.labs.spring.boot.autoconfigure;
+package com.solace.spring.boot.autoconfigure;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -40,7 +40,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.solace.labs.spring.cloud.core.SolaceMessagingInfo;
+import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
@@ -317,10 +317,6 @@ public class SolaceJavaAutoCloudConfigurationTest {
 
 		// Other non cloud provided properties..
 		assertEquals("client-name", (String) session.getProperty(JCSMPProperties.CLIENT_NAME));
-		assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_CLIENT,
-				(String) session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
-		assertEquals(Boolean.TRUE, (Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
-		assertEquals(Boolean.TRUE, (Boolean) session.getProperty(JCSMPProperties.TOPIC_DISPATCH));
 		// Channel properties
 		JCSMPChannelProperties cp = (JCSMPChannelProperties) session
 				.getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
@@ -369,10 +365,6 @@ public class SolaceJavaAutoCloudConfigurationTest {
 
 		// Other non cloud provided properties..
 		assertEquals("client-name", (String) session.getProperty(JCSMPProperties.CLIENT_NAME));
-		assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_CLIENT,
-				(String) session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
-		assertEquals(Boolean.TRUE, (Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
-		assertEquals(Boolean.TRUE, (Boolean) session.getProperty(JCSMPProperties.TOPIC_DISPATCH));
 		// Channel properties
 		JCSMPChannelProperties cp = (JCSMPChannelProperties) session
 				.getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);

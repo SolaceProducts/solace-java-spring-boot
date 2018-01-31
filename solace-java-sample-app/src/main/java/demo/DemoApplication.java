@@ -28,6 +28,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.stereotype.Component;
 
+import com.solacesystems.jcsmp.DeliveryMode;
 import com.solacesystems.jcsmp.JCSMPFactory;
 import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
@@ -75,6 +76,7 @@ public class DemoApplication {
 
             TextMessage jcsmpMsg = JCSMPFactory.onlyInstance().createMessage(TextMessage.class);
             jcsmpMsg.setText(msg);
+            jcsmpMsg.setDeliveryMode(DeliveryMode.PERSISTENT);
 
             logger.info("============= Sending " + msg);
             prod.send(jcsmpMsg, topic);

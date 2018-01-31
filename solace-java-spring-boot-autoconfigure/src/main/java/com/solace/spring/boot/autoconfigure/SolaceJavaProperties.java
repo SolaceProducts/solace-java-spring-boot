@@ -17,16 +17,18 @@
  * under the License.
  */
 
-package com.solace.labs.spring.boot.autoconfigure;
+package com.solace.spring.boot.autoconfigure;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.NestedConfigurationProperty;
 
-import java.util.Properties;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @ConfigurationProperties("solace.java")
 public class SolaceJavaProperties {
 
-     /**
+	/**
      * Solace Message Router Host address. Port is optional and intelligently defaulted by the Solace Java API.
      */
     private String host = "localhost";
@@ -93,36 +95,17 @@ public class SolaceJavaProperties {
      */
     private int reconnectRetryWaitInMillis = 3000;
 
-    /**
-     * Indicates whether the acknowledgement of a received guaranteed message is done by the
-     * the API or by application explicitly calling ackMessage() on the received message
-     * <p>
-     * Possible values are: <p>
-     * <ul>
-     * <li>auto_ack</li>
-     * <li>client_ack</li>
-     * </ul>
-     * Default value: auto_ack
-     */
-    private String messageAckMode = "auto_ack";
 
     /**
-     * If enabled, the API maintains a local cache of subscriptions and reapplies
-     * them when the subscriber connection is reestablished.
-     * <p>
-     * Reapply subscriptions will only apply direct topic subscriptions unpon a Session reconnect.
-     * It will not reapply topic subscriptions on durable and non-durable endpoints
-     * <p>
-     * Default: false
+     * API properties can be set by the attribute naming convention used in
+     * fromProperties() and toProperties()
+     * @see <a href="https://docs.solace.com/API-Developer-Online-Ref-Documentation/java/constant-values.html"> JCSMPProperties</a>
+     * Example: solace.java.apiProperties.reapply_subscriptions=true
      */
-    private boolean reapplySubscriptions = false;
-
-    /**
-     * Advanced attributes that can be set by the attribute naming convention used in
-     * fromProperties() and toProperties() in
-     * @see <a href="http://docs.solace.com/API-Developer-Online-Ref-Documentation/java/index.html"> JCSMPProperties</a>
-     */
-    private Properties advanced = new Properties();
+	@NestedConfigurationProperty
+	private final Map<String,String> apiProperties = new ConcurrentHashMap<>();
+    
+    
     
     public String getHost() {
         return host;
@@ -196,27 +179,8 @@ public class SolaceJavaProperties {
         this.reconnectRetryWaitInMillis = reconnectRetryWaitInMillis;
     }
 
-    public void setMessageAckMode(String messageAckMode) {
-        this.messageAckMode = messageAckMode;
-    }
+    public Map<String,String> getApiProperties() {
+		return apiProperties;
+	}
 
-    public String getMessageAckMode() {
-        return this.messageAckMode;
-    }
-
-    public boolean getReapplySubscriptions() {
-        return this.reapplySubscriptions;
-    }
-
-    public void setReapplySubscriptions(boolean reapplySubscriptions) {
-        this.reapplySubscriptions = reapplySubscriptions;
-    }
-
-    public void setAdvanced(Properties value) {
-        this.advanced = value;
-    }
-
-    public Properties getAdvanced() {
-        return this.advanced;
-    }
 }
