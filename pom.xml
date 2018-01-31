@@ -28,7 +28,7 @@
 	<scm>
 		<url>https://github.com/SolaceProducts/solace-java-spring-boot.git</url>
 		<connection>scm:git:git://github.com/SolaceProducts/solace-java-spring-boot.git</connection>
-		<developerConnection>scm:git:git@SolaceProducts/solace-java-spring-boot.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:SolaceProducts/solace-java-spring-boot.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
