@@ -3,9 +3,9 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.solace.labs.spring.boot</groupId>
+		<groupId>com.solace.spring.boot</groupId>
 		<artifactId>solace-java-spring-boot-parent</artifactId>
-		<version>0.1.4-SNAPSHOT</version>
+		<version>0.2.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -13,7 +13,7 @@
 	<packaging>jar</packaging>
 	<name>Spring Boot AutoConfiguration :: Solace Java API</name>
 	<description>AutoConfiguration for messaging using the Solace Java API</description>
-	<url>https://github.com/SolaceLabs/solace-java-spring-boot</url>
+	<url>https://github.com/SolaceProducts/solace-java-spring-boot</url>
 
 	<dependencies>
 		<dependency>
@@ -23,7 +23,7 @@
 		<dependency>
 			<groupId>com.solacesystems</groupId>
 			<artifactId>sol-jcsmp</artifactId>
-			<version>10.0.1</version>
+			<version>[10,)</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
@@ -37,5 +37,25 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-core</artifactId>
+			<optional>true</optional>
+		</dependency>
+					
+		<dependency>
+		  <groupId>com.solace.cloud.cloudfoundry</groupId>
+		  <artifactId>solace-spring-cloud-connector</artifactId>
+		  <version>[2,)</version>		  
+		</dependency>
+
+		<dependency>
+		  <groupId>com.github.stefanbirkner</groupId>
+		  <artifactId>system-rules</artifactId>
+		  <version>1.16.0</version>
+		  <scope>test</scope>
+		</dependency>
+
 	</dependencies>
 </project>

@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/SolaceLabs/solace-java-spring-boot.svg?branch=master)](https://travis-ci.org/SolaceLabs/solace-java-spring-boot)
+[![Build Status](https://travis-ci.org/SolaceProducts/solace-java-spring-boot.svg?branch=master)](https://travis-ci.org/SolaceProducts/solace-java-spring-boot)
 
 # Spring Boot Auto-Configuration for the Solace Java API
 
-This project provides Spring Boot Auto-Configuration and an associated Spring Boot Started for the Solace Java API. The goal of this project is to make it easy to auto wire the Solace Java API within your application so you can take advantage of all the benefits of Spring Boot auto-configuration.
+This project provides Spring Boot Auto-Configuration and an associated Spring Boot Starter for the Solace Java API. The goal of this project is to make it easy to auto wire the Solace Java API within your application so you can take advantage of all the benefits of Spring Boot auto-configuration.
 
 ## Contents
 
@@ -34,9 +34,9 @@ See the associated `solace-java-sample-app` for an example of how this is all pu
 
 ### Updating your build
 
-This releases from this project are hosted in [Maven Central](https://mvnrepository.com/artifact/com.solace.labs.spring.boot/solace-java-spring-boot-starter)
+The releases from this project are hosted in [Maven Central](https://mvnrepository.com/artifact/com.solace.spring.boot/solace-java-spring-boot-starter)
 
-The easiest way to get started is to include the `solace-java-spring-boot-starter` in your application. For an examples see the [Java Sample App](https://github.com/SolaceLabs/solace-java-spring-boot/tree/master/solace-java-sample-app) in this project.
+The easiest way to get started is to include the `solace-java-spring-boot-starter` in your application. For an examples see the [Java Sample App](https://github.com/SolaceProducts/solace-java-spring-boot/tree/master/solace-java-sample-app) in this project.
 
 Here is how to include the spring boot starter in your project using Gradle and Maven.
 
@@ -44,7 +44,7 @@ Here is how to include the spring boot starter in your project using Gradle and 
 
 ```
 // Solace Java API & auto-configuration
-compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.1")
+compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
 ```
 
 #### Using it with Maven
@@ -52,9 +52,9 @@ compile("com.solace.labs.spring.boot:solace-java-spring-boot-starter:0.1.1")
 ```
 <!-- Solace Java API & auto-configuration-->
 <dependency>
-	<groupId>com.solace.labs.spring.boot</groupId>
+	<groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-starter</artifactId>
-	<version>0.1.1</version>
+	<version>1.+</version>
 </dependency>
 ```
 
@@ -77,7 +77,7 @@ The `SpringJCSMPFactory` is a wrapper of the singleton `JCSMPFactory` which cont
 
 ### Updating your Application Properties
 
-Configuration of the `SpringJCSMPFactory` is done through the `application.properties` file. This is where users can control the Solace Java API properties. Currently this project supports configuration of the following properties:
+Configuration of the `SpringJCSMPFactory` is done through the [`application.properties` file](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-sample-app/src/main/resources/application.properties). This is where users can control the Solace Java API properties. Currently this project supports direct configuration of the following properties:
 
 ```
 solace.java.host
@@ -85,19 +85,29 @@ solace.java.msgVpn
 solace.java.clientUsername
 solace.java.clientPassword
 solace.java.clientName
-solace.java.messageAckMode
-solace.java.reapplySubscriptions
+solace.java.connectRetries
+solace.java.reconnectRetries
+solace.java.connectRetriesPerHost
+solace.java.reconnectRetryWaitInMillis
 ```
 
 Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`. 
 
-See [`SolaceJavaProperties`](https://github.com/SolaceLabs/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/labs/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list. Over time the list of supported properties will continue to evolve and grow. If you're missing a particular property, you can easily submit a pull request or raise an issue and we'll add it.
+See [`SolaceJavaProperties`](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list.
+
+Any additional Solace Java API properties can be set through configuring `solace.java.apiProperties.<Property>` where `<Property>` is the name of the property as defined in the [Solace Java API documentation for `com.solacesystems.jcsmp.JCSMPProperties`](https://docs.solace.com/API-Developer-Online-Ref-Documentation/java/constant-values.html#com.solacesystems.jcsmp.JCSMPProperties.ACK_EVENT_MODE), for example:
+
+```
+solace.java.apiProperties.reapply_subscriptions=false
+```
+
+Note that the direct configuration of `solace.java.` properties takes precedence over the `solace.java.apiProperties.`.
 
 ## Building the Project Yourself 
 
 This project depends on maven for building. To build the jar locally, check out the project and build from source by doing the following:
 
-    git clone https://github.com/SolaceLabs/solace-java-spring-boot.git
+    git clone https://github.com/SolaceProducts/solace-java-spring-boot.git
     cd solace-java-spring-boot
     mvn package
 
@@ -117,7 +127,7 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduc
 
 ## Authors
 
-See the list of [contributors](https://github.com/SolaceLabs/solace-java-spring-boot/graphs/contributors) who participated in this project.
+See the list of [contributors](https://github.com/SolaceProducts/solace-java-spring-boot/graphs/contributors) who participated in this project.
 
 ## License
 

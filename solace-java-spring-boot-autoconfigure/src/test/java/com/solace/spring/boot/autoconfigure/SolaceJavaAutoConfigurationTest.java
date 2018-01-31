@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.solace.labs.spring.boot.autoconfigure;
+package com.solace.spring.boot.autoconfigure;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -49,7 +49,10 @@ public class SolaceJavaAutoConfigurationTest {
 		load(EmptyConfiguration.class, "");
 		SpringJCSMPFactory jcsmpFactory = this.context
 				.getBean(SpringJCSMPFactory.class);
+		assertNotNull(jcsmpFactory);
+		
 		JCSMPSession session = jcsmpFactory.createSession();
+		assertNotNull(session);
 		
 		assertEquals("localhost", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("default", (String)session.getProperty(JCSMPProperties.VPN_NAME));
@@ -79,16 +82,15 @@ public class SolaceJavaAutoConfigurationTest {
 		
 		SpringJCSMPFactory jcsmpFactory = this.context
                 .getBean(SpringJCSMPFactory.class);
+		assertNotNull(jcsmpFactory);
         JCSMPSession session = jcsmpFactory.createSession();
+        assertNotNull(session);
         
         assertEquals("192.168.1.80:55500", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("newVpn", (String)session.getProperty(JCSMPProperties.VPN_NAME));
         assertEquals("bob", (String)session.getProperty(JCSMPProperties.USERNAME) );
         assertEquals("password", (String)session.getProperty(JCSMPProperties.PASSWORD) );
         assertEquals("client-name", (String)session.getProperty(JCSMPProperties.CLIENT_NAME) );
-		assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_CLIENT,(String)session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
-		assertEquals(Boolean.TRUE,(Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
-		assertEquals(Boolean.TRUE,(Boolean) session.getProperty(JCSMPProperties.TOPIC_DISPATCH));
         // Channel properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) session
                 .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);

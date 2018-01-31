@@ -16,9 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package com.solace.labs.spring.boot.autoconfigure;
+package com.solace.spring.boot.autoconfigure;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -30,10 +31,14 @@ import org.springframework.context.annotation.Configuration;
 import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
+
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 @Configuration
 @AutoConfigureBefore(JmsAutoConfiguration.class)
+@AutoConfigureAfter(SolaceJavaAutoCloudConfiguration.class)
 @ConditionalOnClass({JCSMPProperties.class})
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
@@ -44,16 +49,18 @@ public class SolaceJavaAutoConfiguration {
 
 	@Bean
 	public SpringJCSMPFactory connectionFactory() {
-	    
-	
-        JCSMPProperties jcsmpProps = createFromAdvanced(properties.getAdvanced());
+        
+		Properties p = new Properties();
+        Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
+        for (Map.Entry<String,String> entry : set) {
+            p.put("jcsmp." + entry.getKey(), entry.getValue());
+        }
+        JCSMPProperties jcsmpProps = createFromApiProperties(p);
         
         jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
         jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
         jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());
         jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
-        jcsmpProps.setProperty(JCSMPProperties.MESSAGE_ACK_MODE,properties.getMessageAckMode());
-        jcsmpProps.setProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS,properties.getReapplySubscriptions());
         if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
             jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
         }
@@ -71,9 +78,9 @@ public class SolaceJavaAutoConfiguration {
 	    return cf;
 	}
 
-	private JCSMPProperties createFromAdvanced(Properties advanced) {
-        if (advanced != null) {
-            return JCSMPProperties.fromProperties(advanced);
+	private JCSMPProperties createFromApiProperties(Properties apiProps) {
+        if (apiProps != null) {
+            return JCSMPProperties.fromProperties(apiProps);
         } else {
             return new JCSMPProperties();
         }
