@@ -45,9 +45,15 @@
 		</dependency>
 					
 		<dependency>
-		  <groupId>com.solace.cloud.cloudfoundry</groupId>
-		  <artifactId>solace-spring-cloud-connector</artifactId>
-		  <version>2.0.1</version>		  
+	        <groupId>com.solace.cloud.cloudfoundry</groupId>
+	        <artifactId>solace-spring-cloud-connector</artifactId>
+	        <version>2.0.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.solace.cloud.solacecloud</groupId>
+			<artifactId>solace-spring-solacecloud-connector</artifactId>
+			<version>2.1.0-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
