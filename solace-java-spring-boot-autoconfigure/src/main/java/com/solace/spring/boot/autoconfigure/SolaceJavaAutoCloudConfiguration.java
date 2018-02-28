@@ -62,9 +62,9 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 	@Bean
 	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
 		List<SolaceMessagingInfo> solaceMessagingInfoList = new ArrayList<>();
-		
+
 		Cloud cloud = cloudFactory.getCloud();
-		
+
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
 		for (ServiceInfo serviceInfo : serviceInfos) {
 			if (serviceInfo instanceof SolaceMessagingInfo) {
@@ -126,7 +126,7 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 		else
 			jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
 
-		if (solacemessaging.getClientPassword() != null)
+		if (solacemessaging.getClientUsername() != null)
 			jcsmpProps.setProperty(JCSMPProperties.USERNAME, solacemessaging.getClientUsername());
 		else
 			jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());

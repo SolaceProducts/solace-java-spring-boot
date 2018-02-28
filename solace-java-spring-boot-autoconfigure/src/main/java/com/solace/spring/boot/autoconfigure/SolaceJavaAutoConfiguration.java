@@ -18,6 +18,8 @@
  */
 package com.solace.spring.boot.autoconfigure;
 
+import com.solace.services.loader.SolaceCredentialsLoader;
+import com.solace.services.loader.model.SolaceServiceCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -47,23 +49,50 @@ public class SolaceJavaAutoConfiguration {
     @Autowired
 	private SolaceJavaProperties properties;
 
-	@Bean
-	public SpringJCSMPFactory connectionFactory() {
-        
+    private SolaceCredentialsLoader solaceServicesInfoLoader = new SolaceCredentialsLoader();
+
+	private SolaceServiceCredentials findFirstSolaceServiceCredentials() {
+        SolaceServiceCredentials credentials = solaceServicesInfoLoader.getSolaceServiceInfo();
+        return credentials != null ? credentials : new SolaceServiceCredentials();
+    }
+
+    @Bean
+    public SpringJCSMPFactory connectionFactory() {
+	    return connectionFactory(findFirstSolaceServiceCredentials());
+    }
+
+    public SpringJCSMPFactory connectionFactory(SolaceServiceCredentials solaceServiceCredentials) {
 		Properties p = new Properties();
         Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
         for (Map.Entry<String,String> entry : set) {
             p.put("jcsmp." + entry.getKey(), entry.getValue());
         }
         JCSMPProperties jcsmpProps = createFromApiProperties(p);
-        
-        jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
-        jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
-        jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());
-        jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
+
+        if (solaceServiceCredentials.getSmfHosts() != null && !solaceServiceCredentials.getSmfHosts().isEmpty())
+            jcsmpProps.setProperty(JCSMPProperties.HOST, solaceServiceCredentials.getSmfHosts().get(0));
+        else
+            jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
+
+        if (solaceServiceCredentials.getMsgVpnName() != null)
+            jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, solaceServiceCredentials.getMsgVpnName());
+        else
+            jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
+
+        if (solaceServiceCredentials.getClientUsername() != null)
+            jcsmpProps.setProperty(JCSMPProperties.USERNAME, solaceServiceCredentials.getClientUsername());
+        else
+            jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());
+
+        if (solaceServiceCredentials.getClientPassword() != null)
+            jcsmpProps.setProperty(JCSMPProperties.PASSWORD, solaceServiceCredentials.getClientPassword());
+        else
+            jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
+
         if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
             jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
         }
+
         // Channel Properties
         JCSMPChannelProperties cp = (JCSMPChannelProperties) jcsmpProps
                 .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
@@ -73,9 +102,7 @@ public class SolaceJavaAutoConfiguration {
         cp.setReconnectRetryWaitInMillis(properties.getReconnectRetryWaitInMillis());
 
         // Create the SpringJCSMPFactory
-        SpringJCSMPFactory cf = new SpringJCSMPFactory(jcsmpProps);
-        
-	    return cf;
+        return new SpringJCSMPFactory(jcsmpProps);
 	}
 
 	private JCSMPProperties createFromApiProperties(Properties apiProps) {
