@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-public abstract class SolaceJavaAutoConfigurationBase {
+abstract class SolaceJavaAutoConfigurationBase {
     public SpringJCSMPFactory getSpringJCSMPFactory(SolaceServiceCredentials solaceServiceCredentials, SolaceJavaProperties properties) {
         Properties p = new Properties();
         Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
