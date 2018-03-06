@@ -41,11 +41,12 @@ import com.solacesystems.jcsmp.SpringJCSMPFactory;
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
 public class SolaceJavaAutoConfiguration extends SolaceJavaAutoConfigurationBase {
+    private SolaceCredentialsLoader solaceServicesInfoLoader = new SolaceCredentialsLoader();
 
     @Autowired
-	private SolaceJavaProperties properties;
-
-    private SolaceCredentialsLoader solaceServicesInfoLoader = new SolaceCredentialsLoader();
+    public SolaceJavaAutoConfiguration(SolaceJavaProperties properties) {
+        super(properties);
+    }
 
 	private SolaceServiceCredentials findFirstSolaceServiceCredentials() {
         SolaceServiceCredentials credentials = solaceServicesInfoLoader.getSolaceServiceInfo();
@@ -54,7 +55,7 @@ public class SolaceJavaAutoConfiguration extends SolaceJavaAutoConfigurationBase
 
     @Bean
     public SpringJCSMPFactory connectionFactory() {
-	    return getSpringJCSMPFactory(findFirstSolaceServiceCredentials(), properties);
+	    return getSpringJCSMPFactory(findFirstSolaceServiceCredentials());
     }
 
 }

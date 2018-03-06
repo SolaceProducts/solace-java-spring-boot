@@ -54,7 +54,9 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 	private CloudFactory cloudFactory = new CloudFactory();
 
 	@Autowired
-	private SolaceJavaProperties properties;
+	public SolaceJavaAutoCloudConfiguration(SolaceJavaProperties properties) {
+		super(properties);
+	}
 
 	@Bean
 	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
@@ -105,6 +107,6 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 
 	@Override
 	public SpringJCSMPFactory getSpringJCSMPFactory(SolaceMessagingInfo solaceMessagingInfo) {
-		return getSpringJCSMPFactory(solaceMessagingInfo, properties);
+		return super.getSpringJCSMPFactory(solaceMessagingInfo);
 	}
 }
