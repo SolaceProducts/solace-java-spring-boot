@@ -92,6 +92,8 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 
 	@Test
 	public void externallyLoadedServiceProperties() {
+		// Testing one type of externally loaded service is good enough
+		// The loader has its own tests for the other scenarios
 		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
 
 		load(String.format("%s={ \"solace-messaging\": [%s] }",

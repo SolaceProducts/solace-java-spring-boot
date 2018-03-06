@@ -18,11 +18,11 @@ public abstract class SolaceJavaAutoConfigurationTestBase {
     public final EnvironmentVariables environmentVariables;
 
     AnnotationConfigApplicationContext context;
-    private Class<?> configClass;
+    private Class<? extends SolaceJavaAutoConfigurationBase> configClass;
 
     @Configuration public static class EmptyConfiguration {}
 
-    SolaceJavaAutoConfigurationTestBase(Class<?> configClass) {
+    SolaceJavaAutoConfigurationTestBase(Class<? extends SolaceJavaAutoConfigurationBase> configClass) {
         this.configClass = configClass;
         this.environmentVariables = new EnvironmentVariables();
     }
