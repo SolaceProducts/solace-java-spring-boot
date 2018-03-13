@@ -31,14 +31,12 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.Cloud;
 import org.springframework.cloud.CloudFactory;
 import org.springframework.cloud.service.ServiceInfo;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
-import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 
 @Configuration
 @AutoConfigureBefore(SolaceJavaAutoConfiguration.class)
@@ -46,8 +44,7 @@ import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
 @Conditional(CloudCondition.class)
-public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfigurationBase
-		implements SpringJCSMPFactoryCloudFactory {
+public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfigurationBase<SolaceMessagingInfo> {
 
 	private static final Logger logger = LoggerFactory.getLogger(SolaceJavaAutoCloudConfiguration.class);
 
@@ -58,8 +55,8 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 		super(properties);
 	}
 
-	@Bean
-	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
+	@Override
+	List<SolaceMessagingInfo> getSolaceServiceCredentialsImpl() {
 		List<SolaceMessagingInfo> solaceMessagingInfoList = new ArrayList<>();
 
 		Cloud cloud = cloudFactory.getCloud();
@@ -73,8 +70,8 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 		return solaceMessagingInfoList;
 	}
 
-	@Bean
-	public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
+	@Override
+	SolaceMessagingInfo findFirstSolaceServiceCredentialsImpl() {
 		SolaceMessagingInfo solacemessaging = null;
 		Cloud cloud = cloudFactory.getCloud();
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
@@ -98,15 +95,5 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 		}
 
 		return solacemessaging;
-	}
-
-	@Bean
-	public SpringJCSMPFactory getSpringJCSMPFactory() {
-		return getSpringJCSMPFactory(findFirstSolaceMessagingInfo());
-	}
-
-	@Override
-	public SpringJCSMPFactory getSpringJCSMPFactory(SolaceMessagingInfo solaceMessagingInfo) {
-		return super.getSpringJCSMPFactory(solaceMessagingInfo);
 	}
 }

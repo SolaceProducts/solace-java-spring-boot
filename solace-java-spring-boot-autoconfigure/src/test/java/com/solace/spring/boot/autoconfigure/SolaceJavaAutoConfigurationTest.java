@@ -20,8 +20,11 @@ package com.solace.spring.boot.autoconfigure;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
+import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 import org.junit.Test;
 
 import com.solacesystems.jcsmp.InvalidPropertiesException;
@@ -29,6 +32,10 @@ import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
+import org.springframework.core.ResolvableType;
+
+import java.util.Collections;
+import java.util.List;
 
 public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfigurationTestBase {
 
@@ -91,7 +98,7 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 	}
 
 	@Test
-	public void externallyLoadedServiceProperties() {
+	public void externallyLoadedServicePropertiesBasicBeanTest() {
 		// Testing one type of externally loaded service is good enough
 		// The loader has its own tests for the other scenarios
 		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
@@ -103,7 +110,42 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		assertNotNull(solaceManifest);
 		assertTrue(solaceManifest.contains("solace-messaging"));
 
+		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
+		assertNotNull(this.context.getBean(JCSMPProperties.class));
+		assertNotNull(this.context.getBean(SolaceServiceCredentials.class));
+		assertNotNull(this.context.getBean(
+				ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class).resolve()));
+	}
+
+	@Test
+	public void noExternallyLoadedServicePropertiesBasicBeanTest() {
+		// Testing one type of externally loaded service is good enough
+		// The loader has its own tests for the other scenarios
+		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
+		load(String.format("%s={ \"solace-messaging\": [] }", ENV_SOLCAP_SERVICES));
+
+		String solaceManifest = context.getEnvironment().getProperty(ENV_SOLCAP_SERVICES);
+		assertNotNull(solaceManifest);
+		assertTrue(solaceManifest.contains("solace-messaging"));
+
+		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
+		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
+		assertNotNull(this.context.getBean(JCSMPProperties.class));
+		assertNull(this.context.getBean(SolaceServiceCredentials.class));
+		assertEquals(Collections.EMPTY_LIST, this.context.getBean(
+				ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class).resolve()));
+	}
+
+	@Test
+	public void applicationPropertiesBasicBeanTest() {
+		load("");
+		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
+		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
+		assertNotNull(this.context.getBean(JCSMPProperties.class));
+		assertNull(this.context.getBean(SolaceServiceCredentials.class));
+		assertEquals(Collections.EMPTY_LIST, this.context.getBean(
+				ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class).resolve()));
 	}
 
 }

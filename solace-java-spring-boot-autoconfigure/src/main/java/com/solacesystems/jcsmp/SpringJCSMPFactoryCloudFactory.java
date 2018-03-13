@@ -21,36 +21,69 @@ package com.solacesystems.jcsmp;
 
 import java.util.List;
 
-import com.solace.spring.cloud.core.SolaceMessagingInfo;
+import com.solace.services.loader.model.SolaceServiceCredentials;
 
 /**
  * A Factory for SpringJCSMPFactory to Support Cloud Environments having
  * multiple solace-messaging services.
  */
-public interface SpringJCSMPFactoryCloudFactory {
+public interface SpringJCSMPFactoryCloudFactory<T extends SolaceServiceCredentials> {
+	/**
+	 * Gets the first detected SolaceServiceCredentials
+	 *
+	 * @return A Solace Messaging service
+	 */
+	T findFirstSolaceServiceCredentials();
 
 	/**
 	 * Lists All Cloud Environment detected Solace Messaging services
-	 * 
+	 *
 	 * @return List of all Cloud Environment detected Solace Messaging services
 	 */
-	public List<SolaceMessagingInfo> getSolaceMessagingInfos();
+	List<T> getSolaceServiceCredentials();
 
 	/**
 	 * Returns a SpringJCSMPFactory based on the first detected
-	 * SolaceMessagingInfo
-	 * 
+	 * SolaceServiceCredentials
+	 *
 	 * @return SpringJCSMPFactory based on the first detected
-	 *         SolaceMessagingInfo
+	 *         SolaceServiceCredentials
 	 */
-	public SpringJCSMPFactory getSpringJCSMPFactory();
+	SpringJCSMPFactory getSpringJCSMPFactory();
 
 	/**
-	 * Returns a SpringJCSMPFactory based on the given SolaceMessagingInfo
-	 * 
-	 * @param solaceMessagingInfo
-	 * @return SpringJCSMPFactory based on the given SolaceMessagingInfo
+	 *
+	 *
+	 * @param id
+	 * @return
 	 */
-	public SpringJCSMPFactory getSpringJCSMPFactory(SolaceMessagingInfo solaceMessagingInfo);
+	SpringJCSMPFactory getSpringJCSMPFactory(String id);
 
+	/**
+	 * Returns a SpringJCSMPFactory based on the given SolaceServiceCredentials
+	 *
+	 * @param solaceServiceCredentials
+	 * @return SpringJCSMPFactory based on the given SolaceServiceCredentials
+	 */
+	SpringJCSMPFactory getSpringJCSMPFactory(T solaceServiceCredentials);
+
+	/**
+	 *
+	 * @return
+	 */
+	JCSMPProperties getJCSMPProperties();
+
+	/**
+	 *
+	 * @param id
+	 * @return
+	 */
+	JCSMPProperties getJCSMPProperties(String id);
+
+	/**
+	 *
+	 * @param solaceServiceCredentials
+	 * @return
+	 */
+	JCSMPProperties getJCSMPProperties(T solaceServiceCredentials);
 }
