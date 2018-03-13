@@ -24,66 +24,69 @@ import java.util.List;
 import com.solace.services.loader.model.SolaceServiceCredentials;
 
 /**
- * A Factory for SpringJCSMPFactory to Support Cloud Environments having
+ * A Factory for {@link SpringJCSMPFactory} to Support Cloud Environments having
  * multiple solace-messaging services.
  */
 public interface SpringJCSMPFactoryCloudFactory<T extends SolaceServiceCredentials> {
 	/**
-	 * Gets the first detected SolaceServiceCredentials
+	 * Gets the first detected {@link SolaceServiceCredentials}.
 	 *
 	 * @return A Solace Messaging service
 	 */
 	T findFirstSolaceServiceCredentials();
 
 	/**
-	 * Lists All Cloud Environment detected Solace Messaging services
+	 * Lists All Cloud Environment detected Solace Messaging services.
 	 *
 	 * @return List of all Cloud Environment detected Solace Messaging services
 	 */
 	List<T> getSolaceServiceCredentials();
 
 	/**
-	 * Returns a SpringJCSMPFactory based on the first detected
-	 * SolaceServiceCredentials
+	 * Returns a {@link SpringJCSMPFactory} based on the first detected {@link SolaceServiceCredentials}.
 	 *
-	 * @return SpringJCSMPFactory based on the first detected
-	 *         SolaceServiceCredentials
+	 * @return {@link SpringJCSMPFactory} based on the first detected {@link SolaceServiceCredentials}
 	 */
 	SpringJCSMPFactory getSpringJCSMPFactory();
 
 	/**
+	 * Returns a {@link SpringJCSMPFactory} based on the {@link SolaceServiceCredentials}
+	 * identified by the given ID.
 	 *
-	 *
-	 * @param id
-	 * @return
+	 * @param id The Solace Messaging service's ID
+	 * @return {@link SpringJCSMPFactory} based on the specified Solace Messaging service
 	 */
 	SpringJCSMPFactory getSpringJCSMPFactory(String id);
 
 	/**
-	 * Returns a SpringJCSMPFactory based on the given SolaceServiceCredentials
+	 * Returns a {@link SpringJCSMPFactory} based on the given {@link SolaceServiceCredentials}.
 	 *
-	 * @param solaceServiceCredentials
-	 * @return SpringJCSMPFactory based on the given SolaceServiceCredentials
+	 * @param solaceServiceCredentials The credentials to an existing Solace Messaging service
+	 * @return {@link SpringJCSMPFactory} based on the given {@link SolaceServiceCredentials}
 	 */
 	SpringJCSMPFactory getSpringJCSMPFactory(T solaceServiceCredentials);
 
 	/**
+	 * Returns a {@link JCSMPProperties} based on the first detected {@link SolaceServiceCredentials}.
 	 *
-	 * @return
+	 * @return {@link JCSMPProperties} based on the first detected {@link SolaceServiceCredentials}
 	 */
 	JCSMPProperties getJCSMPProperties();
 
 	/**
+	 * Returns a {@link JCSMPProperties} based on the {@link SolaceServiceCredentials}
+	 * identified by the given ID.
 	 *
-	 * @param id
-	 * @return
+	 * @param id The Solace Messaging service's ID
+	 * @return {@link JCSMPProperties} based on the specified Solace Messaging service
 	 */
 	JCSMPProperties getJCSMPProperties(String id);
 
 	/**
+	 * Returns a {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials}.
 	 *
-	 * @param solaceServiceCredentials
-	 * @return
+	 * @param solaceServiceCredentials The credentials to an existing Solace Messaging service
+	 * @return {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials}
 	 */
 	JCSMPProperties getJCSMPProperties(T solaceServiceCredentials);
 }
