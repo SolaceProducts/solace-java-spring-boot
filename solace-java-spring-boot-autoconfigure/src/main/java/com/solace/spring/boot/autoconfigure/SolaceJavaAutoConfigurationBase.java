@@ -49,7 +49,7 @@ abstract class SolaceJavaAutoConfigurationBase<T extends SolaceServiceCredential
     }
 
     @Override
-    public SpringJCSMPFactory getSpringJCSMPFactory(T solaceServiceCredentials) {
+    public SpringJCSMPFactory getSpringJCSMPFactory(SolaceServiceCredentials solaceServiceCredentials) {
         return new SpringJCSMPFactory(getJCSMPProperties(solaceServiceCredentials));
     }
 
@@ -65,7 +65,7 @@ abstract class SolaceJavaAutoConfigurationBase<T extends SolaceServiceCredential
     }
 
     @Override
-    public JCSMPProperties getJCSMPProperties(T solaceServiceCredentials) {
+    public JCSMPProperties getJCSMPProperties(SolaceServiceCredentials solaceServiceCredentials) {
         Properties p = new Properties();
         Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
         for (Map.Entry<String,String> entry : set) {

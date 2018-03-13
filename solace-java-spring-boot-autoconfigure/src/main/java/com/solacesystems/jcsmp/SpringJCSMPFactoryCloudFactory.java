@@ -64,7 +64,7 @@ public interface SpringJCSMPFactoryCloudFactory<T extends SolaceServiceCredentia
 	 * @param solaceServiceCredentials The credentials to an existing Solace Messaging service
 	 * @return {@link SpringJCSMPFactory} based on the given {@link SolaceServiceCredentials}
 	 */
-	SpringJCSMPFactory getSpringJCSMPFactory(T solaceServiceCredentials);
+	SpringJCSMPFactory getSpringJCSMPFactory(SolaceServiceCredentials solaceServiceCredentials);
 
 	/**
 	 * Returns a {@link JCSMPProperties} based on the first detected {@link SolaceServiceCredentials}.
@@ -88,5 +88,5 @@ public interface SpringJCSMPFactoryCloudFactory<T extends SolaceServiceCredentia
 	 * @param solaceServiceCredentials The credentials to an existing Solace Messaging service
 	 * @return {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials}
 	 */
-	JCSMPProperties getJCSMPProperties(T solaceServiceCredentials);
+	JCSMPProperties getJCSMPProperties(SolaceServiceCredentials solaceServiceCredentials);
 }
