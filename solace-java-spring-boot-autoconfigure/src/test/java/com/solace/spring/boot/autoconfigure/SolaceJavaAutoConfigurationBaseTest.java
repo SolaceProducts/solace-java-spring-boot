@@ -96,11 +96,6 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
         validateJCSMPProperties(jcsmpAutoConfBase.getJCSMPProperties(solaceServiceCredentials.getId()), true);
     }
 
-    @Test
-    public void testSessionCreationScenarios() {
-
-    }
-
     private void validateJCSMPFactory(JCSMPSession jcsmpSession, boolean isProperties) {
         validateApiProperties(jcsmpSession);
         validateJCSMPConnectionProperties((JCSMPChannelProperties) jcsmpSession.getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES));
