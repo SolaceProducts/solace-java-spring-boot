@@ -64,7 +64,8 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 	}
 
 	@Deprecated
-	@Primary @Bean
+	@Override
+	@Bean @Primary
 	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
 		List<SolaceMessagingInfo> solaceMessagingInfoList = new ArrayList<>();
 
@@ -84,8 +85,17 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 		return findFirstSolaceMessagingInfo();
 	}
 
+	/**
+	 * Gets the first detected {@link SolaceMessagingInfo}.
+	 *
+	 * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
+	 * was replaced by its interface, {@link SolaceServiceCredentials}.
+	 * Use {@link #findFirstSolaceServiceCredentials()} instead.
+	 *
+	 * @return If in a Cloud Foundry environment, a Solace Messaging service is returned, otherwise null
+	 */
 	@Deprecated
-	@Primary @Bean
+	@Bean @Primary
 	public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
 		SolaceMessagingInfo solacemessaging = null;
 		Cloud cloud = cloudFactory.getCloud();

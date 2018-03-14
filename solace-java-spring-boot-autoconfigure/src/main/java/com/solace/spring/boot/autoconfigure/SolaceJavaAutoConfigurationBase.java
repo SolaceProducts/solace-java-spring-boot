@@ -103,11 +103,6 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
     }
 
     @Override @Deprecated
-    public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
-        return null;
-    }
-
-    @Override @Deprecated
     public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
         return null;
     }

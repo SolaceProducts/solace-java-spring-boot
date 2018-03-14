@@ -92,18 +92,6 @@ public interface SpringJCSMPFactoryCloudFactory {
 	JCSMPProperties getJCSMPProperties(SolaceServiceCredentials solaceServiceCredentials);
 
     /**
-     * Gets the first detected {@link SolaceMessagingInfo}.
-     *
-     * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
-     * was replaced by its interface, {@link SolaceServiceCredentials}.
-     * Use {@link #findFirstSolaceServiceCredentials()} instead.
-     *
-     * @return If in a Cloud Foundry environment, a Solace Messaging service is returned, otherwise null
-     */
-    @Deprecated
-    SolaceMessagingInfo findFirstSolaceMessagingInfo();
-
-    /**
      * Lists All Cloud Environment detected Solace Messaging services.
      *
      * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
