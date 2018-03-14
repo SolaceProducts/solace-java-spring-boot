@@ -26,7 +26,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.runners.Parameterized.Parameters;
 import static org.junit.runners.Parameterized.Parameter;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -72,10 +71,10 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
 		classes.add(ResolvableType.forClass(SpringJCSMPFactoryCloudFactory.class));
 		classes.add(ResolvableType.forClass(SpringJCSMPFactory.class));
 		classes.add(ResolvableType.forClass(JCSMPProperties.class));
-		classes.add(ResolvableType.forClass(SolaceMessagingInfo.class));
-		classes.add(ResolvableType.forClassWithGenerics(List.class, SolaceMessagingInfo.class));
 		classes.add(ResolvableType.forClass(SolaceServiceCredentials.class));
 		classes.add(ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class));
+        classes.add(ResolvableType.forClass(SolaceMessagingInfo.class));
+        classes.add(ResolvableType.forClassWithGenerics(List.class, SolaceMessagingInfo.class));
         return getTestParameters(classes);
     }
 
@@ -103,7 +102,7 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
         assertNull(VCAP_SERVICES);
 
         try {
-            this.context.getBean(beanClass);;
+            this.context.getBean(beanClass);
         } catch(NoSuchBeanDefinitionException e) {
             assertTrue(e.getBeanType().isAssignableFrom(beanClass));
             throw e;
@@ -150,12 +149,14 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
         assertNotNull(VCAP_SERVICES);
         assertTrue(VCAP_SERVICES.contains("solace-messaging"));
 
-        T bean = this.context.getBean(beanClass);;
+        validateBackwardsCompatibility();
+
+        T bean = this.context.getBean(beanClass);
         assertNotNull(bean);
 
         if (beanClass.equals(SpringJCSMPFactoryCloudFactory.class)) {
         	@SuppressWarnings("unchecked")
-            SpringJCSMPFactoryCloudFactory<SolaceServiceCredentials> springJCSMPFactoryCloudFactory = (SpringJCSMPFactoryCloudFactory) bean;
+            SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory = (SpringJCSMPFactoryCloudFactory) bean;
             assertNotNull(springJCSMPFactoryCloudFactory.getSpringJCSMPFactory());
             List<SolaceServiceCredentials> availableServices = springJCSMPFactoryCloudFactory.getSolaceServiceCredentials();
             assertNotNull(availableServices);
@@ -282,6 +283,20 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
 		assertEquals(10, (int) cp.getReconnectRetries());
 		assertEquals(40, (int) cp.getConnectRetriesPerHost());
 		assertEquals(1000, (int) cp.getReconnectRetryWaitInMillis());
+	}
+
+	private void validateBackwardsCompatibility() {
+		assertEquals(2, this.context.getBeanNamesForType(SolaceServiceCredentials.class).length);
+		assertEquals(2, this.context.getBeanNamesForType(SolaceMessagingInfo.class).length);
+		SolaceServiceCredentials ssc = this.context.getBean(SolaceServiceCredentials.class);
+		SolaceMessagingInfo smi = this.context.getBean(SolaceMessagingInfo.class);
+
+		//Primary child class always supersedes any parent
+		assertTrue(ssc.getClass().isAssignableFrom(SolaceMessagingInfo.class));
+		assertTrue(!ssc.getClass().isAssignableFrom(SolaceServiceCredentials.class));
+
+		assertTrue(smi.getClass().isAssignableFrom(SolaceMessagingInfo.class));
+		assertTrue(!smi.getClass().isAssignableFrom(SolaceServiceCredentials.class));
 	}
 
 	private void makeCloudEnv() {

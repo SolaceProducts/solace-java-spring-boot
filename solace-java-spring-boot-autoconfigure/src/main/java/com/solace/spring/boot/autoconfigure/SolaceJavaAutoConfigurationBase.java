@@ -2,6 +2,7 @@ package com.solace.spring.boot.autoconfigure;
 
 import com.solace.services.loader.model.SolaceServiceCredentials;
 import com.solace.services.loader.model.SolaceServiceCredentialsImpl;
+import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
@@ -13,8 +14,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-abstract class SolaceJavaAutoConfigurationBase<T extends SolaceServiceCredentials>
-        implements SpringJCSMPFactoryCloudFactory<T> {
+abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryCloudFactory {
 
     private SolaceJavaProperties properties;
 
@@ -22,18 +22,18 @@ abstract class SolaceJavaAutoConfigurationBase<T extends SolaceServiceCredential
         this.properties = properties;
     }
 
-    abstract T findFirstSolaceServiceCredentialsImpl();
-    abstract List<T> getSolaceServiceCredentialsImpl();
+    abstract SolaceServiceCredentials findFirstSolaceServiceCredentialsImpl();
+    abstract List<SolaceServiceCredentials> getSolaceServiceCredentialsImpl();
 
     @Bean
     @Override
-    public T findFirstSolaceServiceCredentials() {
+    public SolaceServiceCredentials findFirstSolaceServiceCredentials() {
         return findFirstSolaceServiceCredentialsImpl();
     }
 
     @Bean
     @Override
-    public List<T> getSolaceServiceCredentials() {
+    public List<SolaceServiceCredentials> getSolaceServiceCredentials() {
         return getSolaceServiceCredentialsImpl();
     }
 
@@ -102,12 +102,22 @@ abstract class SolaceJavaAutoConfigurationBase<T extends SolaceServiceCredential
         return jcsmpProps;
     }
 
+    @Override @Deprecated
+    public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
+        return null;
+    }
+
+    @Override @Deprecated
+    public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
+        return null;
+    }
+
     private JCSMPProperties createFromApiProperties(Properties apiProps) {
         return apiProps != null ? JCSMPProperties.fromProperties(apiProps) : new JCSMPProperties();
     }
 
-    private T findSolaceServiceCredentialsById(String id) {
-        for (T credentials : getSolaceServiceCredentialsImpl())
+    private SolaceServiceCredentials findSolaceServiceCredentialsById(String id) {
+        for (SolaceServiceCredentials credentials : getSolaceServiceCredentialsImpl())
             if (credentials.getId().equals(id)) return credentials;
         return null;
     }

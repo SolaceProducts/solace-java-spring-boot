@@ -41,7 +41,7 @@ import java.util.List;
 @ConditionalOnClass({JCSMPProperties.class})
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
-public class SolaceJavaAutoConfiguration extends SolaceJavaAutoConfigurationBase<SolaceServiceCredentials> {
+public class SolaceJavaAutoConfiguration extends SolaceJavaAutoConfigurationBase {
     private SolaceCredentialsLoader solaceServicesInfoLoader = new SolaceCredentialsLoader();
 
     @Autowired

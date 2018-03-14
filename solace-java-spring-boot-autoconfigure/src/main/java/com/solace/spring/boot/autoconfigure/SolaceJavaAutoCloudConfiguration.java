@@ -21,6 +21,7 @@ package com.solace.spring.boot.autoconfigure;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.solace.services.loader.model.SolaceServiceCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +32,14 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.Cloud;
 import org.springframework.cloud.CloudFactory;
 import org.springframework.cloud.service.ServiceInfo;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @AutoConfigureBefore(SolaceJavaAutoConfiguration.class)
@@ -44,7 +47,7 @@ import com.solacesystems.jcsmp.SpringJCSMPFactory;
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
 @Conditional(CloudCondition.class)
-public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfigurationBase<SolaceMessagingInfo> {
+public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfigurationBase {
 
 	private static final Logger logger = LoggerFactory.getLogger(SolaceJavaAutoCloudConfiguration.class);
 
@@ -56,7 +59,13 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 	}
 
 	@Override
-	List<SolaceMessagingInfo> getSolaceServiceCredentialsImpl() {
+	List<SolaceServiceCredentials> getSolaceServiceCredentialsImpl() {
+		return new ArrayList<SolaceServiceCredentials>(getSolaceMessagingInfos());
+	}
+
+	@Deprecated
+	@Primary @Bean
+	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
 		List<SolaceMessagingInfo> solaceMessagingInfoList = new ArrayList<>();
 
 		Cloud cloud = cloudFactory.getCloud();
@@ -71,7 +80,13 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 	}
 
 	@Override
-	SolaceMessagingInfo findFirstSolaceServiceCredentialsImpl() {
+	SolaceServiceCredentials findFirstSolaceServiceCredentialsImpl() {
+		return findFirstSolaceMessagingInfo();
+	}
+
+	@Deprecated
+	@Primary @Bean
+	public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
 		SolaceMessagingInfo solacemessaging = null;
 		Cloud cloud = cloudFactory.getCloud();
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();

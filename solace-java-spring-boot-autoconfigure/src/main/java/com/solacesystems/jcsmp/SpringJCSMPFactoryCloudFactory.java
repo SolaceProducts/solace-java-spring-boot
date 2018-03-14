@@ -22,25 +22,26 @@ package com.solacesystems.jcsmp;
 import java.util.List;
 
 import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.spring.cloud.core.SolaceMessagingInfo;
 
 /**
  * A Factory for {@link SpringJCSMPFactory} to Support Cloud Environments having
  * multiple solace-messaging services.
  */
-public interface SpringJCSMPFactoryCloudFactory<T extends SolaceServiceCredentials> {
+public interface SpringJCSMPFactoryCloudFactory {
 	/**
 	 * Gets the first detected {@link SolaceServiceCredentials}.
 	 *
 	 * @return A Solace Messaging service
 	 */
-	T findFirstSolaceServiceCredentials();
+	SolaceServiceCredentials findFirstSolaceServiceCredentials();
 
 	/**
 	 * Lists All Cloud Environment detected Solace Messaging services.
 	 *
 	 * @return List of all Cloud Environment detected Solace Messaging services
 	 */
-	List<T> getSolaceServiceCredentials();
+	List<SolaceServiceCredentials> getSolaceServiceCredentials();
 
 	/**
 	 * Returns a {@link SpringJCSMPFactory} based on the first detected {@link SolaceServiceCredentials}.
@@ -89,4 +90,29 @@ public interface SpringJCSMPFactoryCloudFactory<T extends SolaceServiceCredentia
 	 * @return {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials}
 	 */
 	JCSMPProperties getJCSMPProperties(SolaceServiceCredentials solaceServiceCredentials);
+
+    /**
+     * Gets the first detected {@link SolaceMessagingInfo}.
+     *
+     * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
+     * was replaced by its interface, {@link SolaceServiceCredentials}.
+     * Use {@link #findFirstSolaceServiceCredentials()} instead.
+     *
+     * @return If in a Cloud Foundry environment, a Solace Messaging service is returned, otherwise null
+     */
+    @Deprecated
+    SolaceMessagingInfo findFirstSolaceMessagingInfo();
+
+    /**
+     * Lists All Cloud Environment detected Solace Messaging services.
+     *
+     * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
+     * was replaced by its interface, {@link SolaceServiceCredentials}.
+     * Use {@link #getSolaceServiceCredentials()} instead.
+     *
+     * @return If in a Cloud Foundry environment, list of all Cloud Environment detected Solace Messaging services,
+	 * otherwise null
+     */
+	@Deprecated
+	List<SolaceMessagingInfo> getSolaceMessagingInfos();
 }
