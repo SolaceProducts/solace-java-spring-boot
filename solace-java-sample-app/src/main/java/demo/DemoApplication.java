@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 import org.slf4j.Logger;
@@ -63,13 +64,10 @@ public class DemoApplication {
         @Autowired private List<SolaceServiceCredentials> solaceServiceCredentialsList;
         @Autowired private JCSMPProperties jcsmpProperties;
 
-        /*
-        For backwards compatibility:
-        - As before, these exist only in the specific scenario where the app is deployed in Cloud Foundry.
-
-        @Autowired private List<SolaceMessagingInfo> solaceMessagingInfos;
-        @Autowired private SolaceMessagingInfo solaceMessagingInfo;
-        */
+        /* For backwards compatibility:
+            - As before, these exist only in the specific scenario where the app is deployed in Cloud Foundry.*/
+        @Autowired(required=false) private List<SolaceMessagingInfo> solaceMessagingInfos;
+        @Autowired(required=false) private SolaceMessagingInfo solaceMessagingInfo;
 
         private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();
         private DemoPublishEventHandler pubEventHandler = new DemoPublishEventHandler();
