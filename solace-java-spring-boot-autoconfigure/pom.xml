@@ -21,9 +21,9 @@
 			<artifactId>spring-boot-autoconfigure</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.solace.messaging</groupId>
-			<artifactId>solace-services-info-loader</artifactId>
-			<version>1.0-SNAPSHOT</version>
+			<groupId>com.solace.cloud.core</groupId>
+			<artifactId>solace-services-info</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.solacesystems</groupId>

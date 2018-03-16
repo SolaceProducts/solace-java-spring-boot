@@ -18,8 +18,8 @@
  */
 package com.solace.spring.boot.autoconfigure;
 
-import com.solace.services.loader.SolaceCredentialsLoader;
-import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.services.core.loader.SolaceCredentialsLoader;
+import com.solace.services.core.model.SolaceServiceCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;

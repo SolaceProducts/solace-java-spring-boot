@@ -21,7 +21,7 @@ package com.solacesystems.jcsmp;
 
 import java.util.List;
 
-import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.services.core.model.SolaceServiceCredentials;
 import com.solace.spring.cloud.core.SolaceMessagingInfo;
 
 /**

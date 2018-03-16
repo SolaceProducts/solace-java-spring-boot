@@ -21,7 +21,7 @@ package demo;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.services.core.model.SolaceServiceCredentials;
 import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;

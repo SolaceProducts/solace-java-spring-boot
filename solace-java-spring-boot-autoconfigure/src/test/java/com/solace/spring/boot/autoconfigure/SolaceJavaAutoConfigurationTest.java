@@ -23,7 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
-import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.services.core.model.SolaceServiceCredentials;
 import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 import org.junit.Test;
 

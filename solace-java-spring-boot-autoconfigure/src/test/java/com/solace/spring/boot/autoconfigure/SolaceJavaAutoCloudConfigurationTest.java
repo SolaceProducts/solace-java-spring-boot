@@ -32,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.solace.services.loader.model.SolaceServiceCredentials;
+import com.solace.services.core.model.SolaceServiceCredentials;
 import com.solace.spring.cloud.core.SolaceMessagingInfo;
 import org.json.JSONObject;
 import org.junit.Test;

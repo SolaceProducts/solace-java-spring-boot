@@ -1,8 +1,8 @@
 package com.solace.spring.boot.autoconfigure;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.solace.services.loader.model.SolaceServiceCredentials;
-import com.solace.services.loader.model.SolaceServiceCredentialsImpl;
+import com.solace.services.core.model.SolaceServiceCredentials;
+import com.solace.services.core.model.SolaceServiceCredentialsImpl;
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
