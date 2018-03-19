@@ -9,6 +9,7 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 * [Overview](#overview)
 * [Using Auto-Configuration in your App](#using-auto-configuration-in-your-app)
 * [Building the Project Yourself](#building-the-project-yourself)
+* [Running the Sample](#running-the-sample)
 * [Contributing](#contributing)
 * [Authors](#authors)
 * [License](#license)
@@ -28,9 +29,9 @@ One item to note as described below is that this project introduces a new factor
 
 See the associated `solace-java-sample-app` for an example of how this is all put together in a simple application. You'll need to do three steps:
 
-1. Update your build
-2. Autowiring the `SpringJCSMPFactory`.
-3. Configure your `application.properties`.
+1. Update your build.
+2. Autowire a `SpringJCSMPFactory`.
+3. Configure the application to use a Solace Messaging service.
 
 ### Updating your build
 
@@ -42,14 +43,14 @@ Here is how to include the spring boot starter in your project using Gradle and 
 
 #### Using it with Gradle
 
-```
+```groovy
 // Solace Java API & auto-configuration
 compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
 ```
 
 #### Using it with Maven
 
-```
+```xml
 <!-- Solace Java API & auto-configuration-->
 <dependency>
 	<groupId>com.solace.spring.boot</groupId>
@@ -62,22 +63,71 @@ compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
 
 Now in your application code, you can simply declare the `SpringJCSMPFactory` and annotate it so that it is autowired: 
 
-```
+```java
 @Autowired
 private SpringJCSMPFactory solaceFactory;
 ```
 
 Once you have the `SpringJCSMPFactory`, it behaves just like the `JCSMPFactory` and can be used to create sessions. For example:
 
-```
+```java
 final JCSMPSession session = solaceFactory.createSession();
 ```
 
 The `SpringJCSMPFactory` is a wrapper of the singleton `JCSMPFactory` which contains an associated `JCSMPProperties`. This facilitates auto-wiring by Spring but otherwise maintains the familiar `JCSMPFactory` interface known to users of the Solace Java API.
 
-### Updating your Application Properties
+Alternatively, you could autowire one or more of the following to create your own customized `SpringJCSMPFactory`:
 
-Configuration of the `SpringJCSMPFactory` is done through the [`application.properties` file](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-sample-app/src/main/resources/application.properties). This is where users can control the Solace Java API properties. Currently this project supports direct configuration of the following properties:
+```java
+/* A factory for creating SpringJCSMPFactory. */
+@Autowired
+private SpringJCSMPFactoryCloudFactory springJcsmpFactoryCloudFactory;
+
+/* A POJO describing the credentials for the first detected Solace Messaging service */
+@Autowired
+private SolaceServiceCredentials solaceServiceCredentials;
+
+/* A list of POJOs describing the credentials for all detected Solace Messaging services */
+@Autowired
+private List<SolaceServiceCredentials> solaceServiceCredentialsList;
+
+/* The properties of a JCSMP connection for the first detected Solace Messaging service */
+@Autowired
+private JCSMPProperties jcsmpProperties;
+```
+
+However note that both the `SolaceServiceCredentials` and the `List<SolaceServiceCredentials>` will only provide meaningful information if the application is configured by [exposure of a Solace Messaging service manifest](#exposing-a-solace-messaging-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
+
+### Configure the Application to use your Solace Messaging Service Credentials
+#### Deploying your Application to a Cloud Platform
+
+By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace Messaging services when deployed on a Cloud Platform such as Cloud Foundry.
+
+Currently, the [Solace Cloud Foundry Cloud Connector](https://github.com/SolaceProducts/sl-spring-cloud-connectors) is the only connector that is supported by default in this library, but could easily be augmented by adding your own Solace Spring Cloud Connectors as dependencies to the [auto-configuration's POM](solace-java-spring-boot-autoconfigure/pom.xml).
+
+For example:
+
+```xml
+<dependency>
+	<groupId>com.solace.cloud.cloudfoundry</groupId>
+	<artifactId>solace-spring-cloud-connector</artifactId>
+	<version>2.1.0</version>
+</dependency>
+```
+
+#### Exposing a Solace Messaging Service Manifest in the Application's Environment
+
+Configuration of the `SpringJCSMPFactory` can be done through exposing a Solace Messaging service manifest to the application's JVM properties or OS environment.
+
+For example, you can set a `SOLCAP_SERVICES` variable in either your JVM properties or OS's environment to directly contain a `VCAP_SERVICES`-formatted manifest file. In which case, the autoconfigure will pick up any Solace Messaging services in it and use them to accordingly configure your `SpringJCSMPFactory`.
+
+The properties provided by this externally-provided manifest can also be augmented using the values from the [application's properties file](#updating-your-application-properties).
+
+For details on valid manifest formats and other ways of exposing Solace service manifests to your application, see the _Manifest Load Order and Expected Formats_ section in the [Solace Services Info](https://github.com/SolaceProducts/solace-services-info#manifest-load-order-and-expected-formats) project.
+
+#### Updating your Application Properties
+
+Alternatively, configuration of the `SpringJCSMPFactory` can also be done through the [`application.properties` file](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-sample-app/src/main/resources/application.properties). This is where users can control the Solace Java API properties. Currently this project supports direct configuration of the following properties:
 
 ```
 solace.java.host
