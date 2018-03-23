@@ -18,8 +18,13 @@
  */
 package demo;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import com.solace.services.core.model.SolaceServiceCredentials;
+import com.solace.spring.cloud.core.SolaceMessagingInfo;
+import com.solacesystems.jcsmp.JCSMPProperties;
+import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,8 +56,18 @@ public class DemoApplication {
 
         private final Topic topic = JCSMPFactory.onlyInstance().createTopic("tutorial/topic");
 
-        @Autowired
-        private SpringJCSMPFactory solaceFactory;
+        @Autowired private SpringJCSMPFactory solaceFactory;
+
+        // Other beans that can be used together to generate a customized SpringJCSMPFactory
+        @Autowired private SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory;
+        @Autowired private SolaceServiceCredentials solaceServiceCredentials;
+        @Autowired private List<SolaceServiceCredentials> solaceServiceCredentialsList;
+        @Autowired private JCSMPProperties jcsmpProperties;
+
+        /* For backwards compatibility:
+            - As before, these exist only in the specific scenario where the app is deployed in Cloud Foundry.*/
+        @Autowired(required=false) private List<SolaceMessagingInfo> solaceMessagingInfos;
+        @Autowired(required=false) private SolaceMessagingInfo solaceMessagingInfo;
 
         private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();
         private DemoPublishEventHandler pubEventHandler = new DemoPublishEventHandler();
@@ -67,7 +82,7 @@ public class DemoApplication {
             session.addSubscription(topic);
             logger.info("Connected. Awaiting message...");
             cons.start();
-            
+
             // Consumer session is now hooked up and running!
 
             /** Anonymous inner-class for handling publishing events */
@@ -83,7 +98,7 @@ public class DemoApplication {
 
             try {
                 // block here until message received, and latch will flip
-                msgConsumer.getLatch().await(10, TimeUnit.SECONDS); 
+                msgConsumer.getLatch().await(10, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 logger.error("I was awoken while waiting");
             }

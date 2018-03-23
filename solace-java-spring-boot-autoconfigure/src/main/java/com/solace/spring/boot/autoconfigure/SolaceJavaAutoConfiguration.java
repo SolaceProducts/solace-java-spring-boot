@@ -18,6 +18,8 @@
  */
 package com.solace.spring.boot.autoconfigure;
 
+import com.solace.services.core.loader.SolaceCredentialsLoader;
+import com.solace.services.core.model.SolaceServiceCredentials;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.AutoConfigureBefore;
@@ -25,16 +27,13 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jms.JmsAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
 
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Configuration
 @AutoConfigureBefore(JmsAutoConfiguration.class)
@@ -42,48 +41,22 @@ import java.util.Set;
 @ConditionalOnClass({JCSMPProperties.class})
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
-public class SolaceJavaAutoConfiguration {
+public class SolaceJavaAutoConfiguration extends SolaceJavaAutoConfigurationBase {
+    private SolaceCredentialsLoader solaceServicesInfoLoader = new SolaceCredentialsLoader();
 
     @Autowired
-	private SolaceJavaProperties properties;
+    public SolaceJavaAutoConfiguration(SolaceJavaProperties properties) {
+        super(properties);
+    }
 
-	@Bean
-	public SpringJCSMPFactory connectionFactory() {
-        
-		Properties p = new Properties();
-        Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
-        for (Map.Entry<String,String> entry : set) {
-            p.put("jcsmp." + entry.getKey(), entry.getValue());
-        }
-        JCSMPProperties jcsmpProps = createFromApiProperties(p);
-        
-        jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
-        jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
-        jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());
-        jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
-        if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
-            jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
-        }
-        // Channel Properties
-        JCSMPChannelProperties cp = (JCSMPChannelProperties) jcsmpProps
-                .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
-        cp.setConnectRetries(properties.getConnectRetries());
-        cp.setReconnectRetries(properties.getReconnectRetries());
-        cp.setConnectRetriesPerHost(properties.getConnectRetriesPerHost());
-        cp.setReconnectRetryWaitInMillis(properties.getReconnectRetryWaitInMillis());
+    @Override
+    SolaceServiceCredentials findFirstSolaceServiceCredentialsImpl() {
+        return solaceServicesInfoLoader.getSolaceServiceInfo();
+    }
 
-        // Create the SpringJCSMPFactory
-        SpringJCSMPFactory cf = new SpringJCSMPFactory(jcsmpProps);
-        
-	    return cf;
-	}
-
-	private JCSMPProperties createFromApiProperties(Properties apiProps) {
-        if (apiProps != null) {
-            return JCSMPProperties.fromProperties(apiProps);
-        } else {
-            return new JCSMPProperties();
-        }
+    @Override
+    List<SolaceServiceCredentials> getSolaceServiceCredentialsImpl() {
+        return new ArrayList<>(solaceServicesInfoLoader.getAllSolaceServiceInfo().values());
     }
 
 }
