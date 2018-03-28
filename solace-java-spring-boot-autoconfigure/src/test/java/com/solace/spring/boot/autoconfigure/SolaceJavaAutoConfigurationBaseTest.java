@@ -42,7 +42,7 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
         jcsmpAutoConfBase = Mockito.mock(SolaceJavaAutoConfigurationBase.class, Mockito.CALLS_REAL_METHODS);
         jcsmpAutoConfBase.setProperties(solaceJavaProperties);
         Mockito.doReturn(solaceServiceCredentials).when(jcsmpAutoConfBase).findFirstSolaceServiceCredentialsImpl();
-        Mockito.doReturn(credsList).when(jcsmpAutoConfBase).getSolaceServiceCredentialsImpl();
+        Mockito.doReturn(credsList).when(jcsmpAutoConfBase).getSolaceServiceCredentials();
     }
 
     @Test
@@ -169,6 +169,6 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
 
     private void disableSolaceServiceCredentials() {
         Mockito.doReturn(null).when(jcsmpAutoConfBase).findFirstSolaceServiceCredentialsImpl();
-        Mockito.doReturn(new ArrayList<>()).when(jcsmpAutoConfBase).getSolaceServiceCredentialsImpl();
+        Mockito.doReturn(new ArrayList<>()).when(jcsmpAutoConfBase).getSolaceServiceCredentials();
     }
 }

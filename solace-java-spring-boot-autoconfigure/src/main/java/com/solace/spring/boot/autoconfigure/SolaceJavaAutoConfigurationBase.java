@@ -23,18 +23,14 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
     }
 
     abstract SolaceServiceCredentials findFirstSolaceServiceCredentialsImpl();
-    abstract List<SolaceServiceCredentials> getSolaceServiceCredentialsImpl();
+
+    @Override
+    public abstract List<SolaceServiceCredentials> getSolaceServiceCredentials();
 
     @Bean
     @Override
     public SolaceServiceCredentials findFirstSolaceServiceCredentials() {
         return findFirstSolaceServiceCredentialsImpl();
-    }
-
-    @Bean
-    @Override
-    public List<SolaceServiceCredentials> getSolaceServiceCredentials() {
-        return getSolaceServiceCredentialsImpl();
     }
 
     @Bean
@@ -114,7 +110,7 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
     }
 
     private SolaceServiceCredentials findSolaceServiceCredentialsById(String id) {
-        for (SolaceServiceCredentials credentials : getSolaceServiceCredentialsImpl())
+        for (SolaceServiceCredentials credentials : getSolaceServiceCredentials())
             if (credentials.getId().equals(id)) return credentials;
         return null;
     }
