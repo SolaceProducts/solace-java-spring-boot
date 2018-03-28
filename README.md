@@ -87,16 +87,12 @@ private SpringJCSMPFactoryCloudFactory springJcsmpFactoryCloudFactory;
 @Autowired
 private SolaceServiceCredentials solaceServiceCredentials;
 
-/* A list of POJOs describing the credentials for all detected Solace Messaging services */
-@Autowired
-private List<SolaceServiceCredentials> solaceServiceCredentialsList;
-
 /* The properties of a JCSMP connection for the first detected Solace Messaging service */
 @Autowired
 private JCSMPProperties jcsmpProperties;
 ```
 
-However note that both the `SolaceServiceCredentials` and the `List<SolaceServiceCredentials>` will only provide meaningful information if the application is configured by [exposure of a Solace Messaging service manifest](#exposing-a-solace-messaging-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
+However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace Messaging service manifest](#exposing-a-solace-messaging-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
 
 ### Configure the Application to use your Solace Messaging Service Credentials
 #### Deploying your Application to a Cloud Platform
