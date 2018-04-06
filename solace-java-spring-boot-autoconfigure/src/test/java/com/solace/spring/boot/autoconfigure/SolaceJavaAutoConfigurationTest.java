@@ -32,6 +32,7 @@ import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
+import org.springframework.core.ResolvableType;
 
 public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfigurationTestBase {
 
