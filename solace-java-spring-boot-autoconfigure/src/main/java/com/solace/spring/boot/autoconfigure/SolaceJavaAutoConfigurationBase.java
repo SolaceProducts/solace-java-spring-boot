@@ -23,18 +23,14 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
     }
 
     abstract SolaceServiceCredentials findFirstSolaceServiceCredentialsImpl();
-    abstract List<SolaceServiceCredentials> getSolaceServiceCredentialsImpl();
+
+    @Override
+    public abstract List<SolaceServiceCredentials> getSolaceServiceCredentials();
 
     @Bean
     @Override
     public SolaceServiceCredentials findFirstSolaceServiceCredentials() {
         return findFirstSolaceServiceCredentialsImpl();
-    }
-
-    @Bean
-    @Override
-    public List<SolaceServiceCredentials> getSolaceServiceCredentials() {
-        return getSolaceServiceCredentialsImpl();
     }
 
     @Bean
@@ -45,7 +41,8 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
 
     @Override
     public SpringJCSMPFactory getSpringJCSMPFactory(String id) {
-        return getSpringJCSMPFactory(findSolaceServiceCredentialsById(id));
+        SolaceServiceCredentials solaceServiceCredentials = findSolaceServiceCredentialsById(id);
+        return solaceServiceCredentials == null ? null : getSpringJCSMPFactory(solaceServiceCredentials);
     }
 
     @Override
@@ -61,7 +58,8 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
 
     @Override
     public JCSMPProperties getJCSMPProperties(String id) {
-        return getJCSMPProperties(findSolaceServiceCredentialsById(id));
+        SolaceServiceCredentials solaceServiceCredentials = findSolaceServiceCredentialsById(id);
+        return solaceServiceCredentials == null ? null : getJCSMPProperties(solaceServiceCredentials);
     }
 
     @Override
@@ -112,7 +110,7 @@ abstract class SolaceJavaAutoConfigurationBase implements SpringJCSMPFactoryClou
     }
 
     private SolaceServiceCredentials findSolaceServiceCredentialsById(String id) {
-        for (SolaceServiceCredentials credentials : getSolaceServiceCredentialsImpl())
+        for (SolaceServiceCredentials credentials : getSolaceServiceCredentials())
             if (credentials.getId().equals(id)) return credentials;
         return null;
     }

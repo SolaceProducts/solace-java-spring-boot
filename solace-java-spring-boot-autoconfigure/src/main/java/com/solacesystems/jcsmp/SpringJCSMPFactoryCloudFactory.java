@@ -55,7 +55,8 @@ public interface SpringJCSMPFactoryCloudFactory {
 	 * identified by the given ID.
 	 *
 	 * @param id The Solace Messaging service's ID
-	 * @return {@link SpringJCSMPFactory} based on the specified Solace Messaging service
+	 * @return {@link SpringJCSMPFactory} with the given Solace Messaging service ID,
+	 * otherwise null if the service cannot be found
 	 */
 	SpringJCSMPFactory getSpringJCSMPFactory(String id);
 
@@ -63,7 +64,8 @@ public interface SpringJCSMPFactoryCloudFactory {
 	 * Returns a {@link SpringJCSMPFactory} based on the given {@link SolaceServiceCredentials}.
 	 *
 	 * @param solaceServiceCredentials The credentials to an existing Solace Messaging service
-	 * @return {@link SpringJCSMPFactory} based on the given {@link SolaceServiceCredentials}
+	 * @return {@link SpringJCSMPFactory} based on the given {@link SolaceServiceCredentials},
+	 * otherwise an application.properties based {@link SpringJCSMPFactory}
 	 */
 	SpringJCSMPFactory getSpringJCSMPFactory(SolaceServiceCredentials solaceServiceCredentials);
 
@@ -79,7 +81,8 @@ public interface SpringJCSMPFactoryCloudFactory {
 	 * identified by the given ID.
 	 *
 	 * @param id The Solace Messaging service's ID
-	 * @return {@link JCSMPProperties} based on the specified Solace Messaging service
+	 * @return {@link JCSMPProperties} with the given Solace Messaging service ID,
+	 * otherwise null if the service cannot be found
 	 */
 	JCSMPProperties getJCSMPProperties(String id);
 
@@ -87,7 +90,8 @@ public interface SpringJCSMPFactoryCloudFactory {
 	 * Returns a {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials}.
 	 *
 	 * @param solaceServiceCredentials The credentials to an existing Solace Messaging service
-	 * @return {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials}
+	 * @return {@link JCSMPProperties} based on the given {@link SolaceServiceCredentials},
+	 * otherwise an application.properties based {@link JCSMPProperties}
 	 */
 	JCSMPProperties getJCSMPProperties(SolaceServiceCredentials solaceServiceCredentials);
 

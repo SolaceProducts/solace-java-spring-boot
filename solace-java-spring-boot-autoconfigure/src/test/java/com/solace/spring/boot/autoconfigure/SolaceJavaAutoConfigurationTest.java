@@ -34,9 +34,6 @@ import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
 import org.springframework.core.ResolvableType;
 
-import java.util.Collections;
-import java.util.List;
-
 public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfigurationTestBase {
 
 	public SolaceJavaAutoConfigurationTest() {
@@ -114,8 +111,6 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
 		assertNotNull(this.context.getBean(JCSMPProperties.class));
 		assertNotNull(this.context.getBean(SolaceServiceCredentials.class));
-		assertNotNull(this.context.getBean(
-				ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class).resolve()));
 	}
 
 	@Test
@@ -133,8 +128,6 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
 		assertNotNull(this.context.getBean(JCSMPProperties.class));
 		assertNull(this.context.getBean(SolaceServiceCredentials.class));
-		assertEquals(Collections.EMPTY_LIST, this.context.getBean(
-				ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class).resolve()));
 	}
 
 	@Test
@@ -144,8 +137,6 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
 		assertNotNull(this.context.getBean(JCSMPProperties.class));
 		assertNull(this.context.getBean(SolaceServiceCredentials.class));
-		assertEquals(Collections.EMPTY_LIST, this.context.getBean(
-				ResolvableType.forClassWithGenerics(List.class, SolaceServiceCredentials.class).resolve()));
 	}
 
 }

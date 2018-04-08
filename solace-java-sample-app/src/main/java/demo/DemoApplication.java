@@ -61,12 +61,10 @@ public class DemoApplication {
         // Other beans that can be used together to generate a customized SpringJCSMPFactory
         @Autowired private SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory;
         @Autowired private SolaceServiceCredentials solaceServiceCredentials;
-        @Autowired private List<SolaceServiceCredentials> solaceServiceCredentialsList;
         @Autowired private JCSMPProperties jcsmpProperties;
 
         /* For backwards compatibility:
             - As before, these exist only in the specific scenario where the app is deployed in Cloud Foundry.*/
-        @Autowired(required=false) private List<SolaceMessagingInfo> solaceMessagingInfos;
         @Autowired(required=false) private SolaceMessagingInfo solaceMessagingInfo;
 
         private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();

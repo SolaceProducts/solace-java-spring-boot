@@ -19,6 +19,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigurationTestBase {
     private SolaceJavaProperties solaceJavaProperties = getSolaceJavaProperties();
@@ -41,7 +42,7 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
         jcsmpAutoConfBase = Mockito.mock(SolaceJavaAutoConfigurationBase.class, Mockito.CALLS_REAL_METHODS);
         jcsmpAutoConfBase.setProperties(solaceJavaProperties);
         Mockito.doReturn(solaceServiceCredentials).when(jcsmpAutoConfBase).findFirstSolaceServiceCredentialsImpl();
-        Mockito.doReturn(credsList).when(jcsmpAutoConfBase).getSolaceServiceCredentialsImpl();
+        Mockito.doReturn(credsList).when(jcsmpAutoConfBase).getSolaceServiceCredentials();
     }
 
     @Test
@@ -72,7 +73,7 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
     public void testGetSpringJCSMPFactoryById() throws InvalidPropertiesException {
         validateJCSMPFactory(jcsmpAutoConfBase.getSpringJCSMPFactory(solaceServiceCredentials.getId()).createSession(), false);
         disableSolaceServiceCredentials();
-        validateJCSMPFactory(jcsmpAutoConfBase.getSpringJCSMPFactory(solaceServiceCredentials.getId()).createSession(), true);
+        assertNull(jcsmpAutoConfBase.getSpringJCSMPFactory(solaceServiceCredentials.getId()));
     }
 
     @Test
@@ -93,7 +94,7 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
     public void testGetJCSMPPropertiesById() throws InvalidPropertiesException {
         validateJCSMPProperties(jcsmpAutoConfBase.getJCSMPProperties(solaceServiceCredentials.getId()), false);
         disableSolaceServiceCredentials();
-        validateJCSMPProperties(jcsmpAutoConfBase.getJCSMPProperties(solaceServiceCredentials.getId()), true);
+        assertNull(jcsmpAutoConfBase.getJCSMPProperties(solaceServiceCredentials.getId()));
     }
 
     private void validateJCSMPFactory(JCSMPSession jcsmpSession, boolean isProperties) {
@@ -168,6 +169,6 @@ public class SolaceJavaAutoConfigurationBaseTest extends SolaceJavaAutoConfigura
 
     private void disableSolaceServiceCredentials() {
         Mockito.doReturn(null).when(jcsmpAutoConfBase).findFirstSolaceServiceCredentialsImpl();
-        Mockito.doReturn(new ArrayList<>()).when(jcsmpAutoConfBase).getSolaceServiceCredentialsImpl();
+        Mockito.doReturn(new ArrayList<>()).when(jcsmpAutoConfBase).getSolaceServiceCredentials();
     }
 }
