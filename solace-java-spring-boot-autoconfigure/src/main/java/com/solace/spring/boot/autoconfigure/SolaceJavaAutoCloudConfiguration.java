@@ -20,10 +20,8 @@ package com.solace.spring.boot.autoconfigure;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
 
+import com.solace.services.core.model.SolaceServiceCredentials;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,10 +37,9 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
 import com.solace.spring.cloud.core.SolaceMessagingInfo;
-import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
-import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
+import org.springframework.context.annotation.Primary;
 
 @Configuration
 @AutoConfigureBefore(SolaceJavaAutoConfiguration.class)
@@ -50,21 +47,29 @@ import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 @ConditionalOnMissingBean(SpringJCSMPFactory.class)
 @EnableConfigurationProperties(SolaceJavaProperties.class)
 @Conditional(CloudCondition.class)
-public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloudFactory {
+public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfigurationBase {
 
 	private static final Logger logger = LoggerFactory.getLogger(SolaceJavaAutoCloudConfiguration.class);
 
 	private CloudFactory cloudFactory = new CloudFactory();
 
 	@Autowired
-	private SolaceJavaProperties properties;
+	public SolaceJavaAutoCloudConfiguration(SolaceJavaProperties properties) {
+		super(properties);
+	}
 
-	@Bean
+	@Override
+	public List<SolaceServiceCredentials> getSolaceServiceCredentials() {
+		return new ArrayList<SolaceServiceCredentials>(getSolaceMessagingInfos());
+	}
+
+	@Deprecated
+	@Override
 	public List<SolaceMessagingInfo> getSolaceMessagingInfos() {
 		List<SolaceMessagingInfo> solaceMessagingInfoList = new ArrayList<>();
-		
+
 		Cloud cloud = cloudFactory.getCloud();
-		
+
 		List<ServiceInfo> serviceInfos = cloud.getServiceInfos();
 		for (ServiceInfo serviceInfo : serviceInfos) {
 			if (serviceInfo instanceof SolaceMessagingInfo) {
@@ -74,7 +79,22 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 		return solaceMessagingInfoList;
 	}
 
-	@Bean
+	@Override
+	SolaceServiceCredentials findFirstSolaceServiceCredentialsImpl() {
+		return findFirstSolaceMessagingInfo();
+	}
+
+	/**
+	 * Gets the first detected {@link SolaceMessagingInfo}.
+	 *
+	 * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
+	 * was replaced by its interface, {@link SolaceServiceCredentials}.
+	 * Use {@link #findFirstSolaceServiceCredentials()} instead.
+	 *
+	 * @return If in a Cloud Foundry environment, a Solace Messaging service is returned, otherwise null
+	 */
+	@Deprecated
+	@Bean @Primary
 	public SolaceMessagingInfo findFirstSolaceMessagingInfo() {
 		SolaceMessagingInfo solacemessaging = null;
 		Cloud cloud = cloudFactory.getCloud();
@@ -100,64 +120,4 @@ public class SolaceJavaAutoCloudConfiguration implements SpringJCSMPFactoryCloud
 
 		return solacemessaging;
 	}
-
-	@Bean
-	public SpringJCSMPFactory getSpringJCSMPFactory() {
-		return getSpringJCSMPFactory(findFirstSolaceMessagingInfo());
-	}
-
-	@Override
-	public SpringJCSMPFactory getSpringJCSMPFactory(SolaceMessagingInfo solacemessaging) {
-
-		Properties p = new Properties();
-        Set<Map.Entry<String,String>> set = properties.getApiProperties().entrySet();
-        for (Map.Entry<String,String> entry : set) {
-            p.put("jcsmp." + entry.getKey(), entry.getValue());
-        }
-        JCSMPProperties jcsmpProps = createFromApiProperties(p);
-
-		if (solacemessaging.getSmfHost() != null)
-			jcsmpProps.setProperty(JCSMPProperties.HOST, solacemessaging.getSmfHost());
-		else
-			jcsmpProps.setProperty(JCSMPProperties.HOST, properties.getHost());
-
-		if (solacemessaging.getMsgVpnName() != null)
-			jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, solacemessaging.getMsgVpnName());
-		else
-			jcsmpProps.setProperty(JCSMPProperties.VPN_NAME, properties.getMsgVpn());
-
-		if (solacemessaging.getClientPassword() != null)
-			jcsmpProps.setProperty(JCSMPProperties.USERNAME, solacemessaging.getClientUsername());
-		else
-			jcsmpProps.setProperty(JCSMPProperties.USERNAME, properties.getClientUsername());
-
-		if (solacemessaging.getClientPassword() != null)
-			jcsmpProps.setProperty(JCSMPProperties.PASSWORD, solacemessaging.getClientPassword());
-		else
-			jcsmpProps.setProperty(JCSMPProperties.PASSWORD, properties.getClientPassword());
-
-		if ((properties.getClientName() != null) && (!properties.getClientName().isEmpty())) {
-			jcsmpProps.setProperty(JCSMPProperties.CLIENT_NAME, properties.getClientName());
-		}
-
-		// Channel Properties
-		JCSMPChannelProperties cp = (JCSMPChannelProperties) jcsmpProps
-				.getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
-		cp.setConnectRetries(properties.getConnectRetries());
-		cp.setReconnectRetries(properties.getReconnectRetries());
-		cp.setConnectRetriesPerHost(properties.getConnectRetriesPerHost());
-		cp.setReconnectRetryWaitInMillis(properties.getReconnectRetryWaitInMillis());
-
-		// Create the SpringJCSMPFactory
-		return new SpringJCSMPFactory(jcsmpProps);
-	}
-
-	private JCSMPProperties createFromApiProperties(Properties apiProps) {
-        if (apiProps != null) {
-            return JCSMPProperties.fromProperties(apiProps);
-        } else {
-            return new JCSMPProperties();
-        }
-    }
-
 }
