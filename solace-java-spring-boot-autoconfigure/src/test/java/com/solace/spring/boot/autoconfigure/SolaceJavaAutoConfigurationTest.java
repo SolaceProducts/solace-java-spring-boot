@@ -20,40 +20,35 @@ package com.solace.spring.boot.autoconfigure;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
-import org.junit.After;
+import com.solace.services.core.model.SolaceServiceCredentials;
+import com.solacesystems.jcsmp.SpringJCSMPFactoryCloudFactory;
 import org.junit.Test;
-import org.springframework.boot.test.util.EnvironmentTestUtils;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
 
 import com.solacesystems.jcsmp.InvalidPropertiesException;
 import com.solacesystems.jcsmp.JCSMPChannelProperties;
 import com.solacesystems.jcsmp.JCSMPProperties;
 import com.solacesystems.jcsmp.JCSMPSession;
 import com.solacesystems.jcsmp.SpringJCSMPFactory;
+import org.springframework.core.ResolvableType;
 
-public class SolaceJavaAutoConfigurationTest {
+public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfigurationTestBase {
 
-	private AnnotationConfigApplicationContext context;
-
-	@After
-	public void tearDown() {
-		if (this.context != null) {
-			this.context.close();
-		}
+	public SolaceJavaAutoConfigurationTest() {
+		super(SolaceJavaAutoConfiguration.class);
 	}
 
 	@Test
 	public void defaultNativeConnectionFactory() throws InvalidPropertiesException {
-		load(EmptyConfiguration.class, "");
-		SpringJCSMPFactory jcsmpFactory = this.context
-				.getBean(SpringJCSMPFactory.class);
+		load("");
+		SpringJCSMPFactory jcsmpFactory = this.context.getBean(SpringJCSMPFactory.class);
 		assertNotNull(jcsmpFactory);
-		
+
 		JCSMPSession session = jcsmpFactory.createSession();
 		assertNotNull(session);
-		
+
 		assertEquals("localhost", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("default", (String)session.getProperty(JCSMPProperties.VPN_NAME));
         assertEquals("spring-default-client-username", (String)session.getProperty(JCSMPProperties.USERNAME) );
@@ -72,20 +67,19 @@ public class SolaceJavaAutoConfigurationTest {
 
 	@Test
 	public void customNativeConnectionFactory() throws InvalidPropertiesException {
-		load(EmptyConfiguration.class, "solace.java.host=192.168.1.80:55500",
+		load("solace.java.host=192.168.1.80:55500",
 				"solace.java.clientUsername=bob", "solace.java.clientPassword=password",
 				"solace.java.msgVpn=newVpn", "solace.java.clientName=client-name",
 				"solace.java.connectRetries=5", "solace.java.reconnectRetries=10",
 				"solace.java.connectRetriesPerHost=40", "solace.java.reconnectRetryWaitInMillis=1000",
 				"solace.java.messageAckMode=client_ack","solace.java.reapplySubscriptions=true",
 				"solace.java.advanced.jcsmp.TOPIC_DISPATCH=true");
-		
-		SpringJCSMPFactory jcsmpFactory = this.context
-                .getBean(SpringJCSMPFactory.class);
+
+		SpringJCSMPFactory jcsmpFactory = this.context.getBean(SpringJCSMPFactory.class);
 		assertNotNull(jcsmpFactory);
         JCSMPSession session = jcsmpFactory.createSession();
         assertNotNull(session);
-        
+
         assertEquals("192.168.1.80:55500", (String)session.getProperty(JCSMPProperties.HOST));
         assertEquals("newVpn", (String)session.getProperty(JCSMPProperties.VPN_NAME));
         assertEquals("bob", (String)session.getProperty(JCSMPProperties.USERNAME) );
@@ -100,18 +94,49 @@ public class SolaceJavaAutoConfigurationTest {
         assertEquals(1000, (int)cp.getReconnectRetryWaitInMillis());
 	}
 
+	@Test
+	public void externallyLoadedServicePropertiesBasicBeanTest() {
+		// Testing one type of externally loaded service is good enough
+		// The loader has its own tests for the other scenarios
+		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
 
+		load(String.format("%s={ \"solace-messaging\": [%s] }",
+				ENV_SOLCAP_SERVICES, addOneSolaceService(ENV_SOLCAP_SERVICES)));
 
-	@Configuration
-	static class EmptyConfiguration {}
+		String solaceManifest = context.getEnvironment().getProperty(ENV_SOLCAP_SERVICES);
+		assertNotNull(solaceManifest);
+		assertTrue(solaceManifest.contains("solace-messaging"));
 
-	private void load(Class<?> config, String... environment) {
-		AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-		EnvironmentTestUtils.addEnvironment(applicationContext, environment);
-		applicationContext.register(config);
-		applicationContext.register(SolaceJavaAutoConfiguration.class);
-		applicationContext.refresh();
-		this.context = applicationContext;
+		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
+		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
+		assertNotNull(this.context.getBean(JCSMPProperties.class));
+		assertNotNull(this.context.getBean(SolaceServiceCredentials.class));
+	}
+
+	@Test
+	public void noExternallyLoadedServicePropertiesBasicBeanTest() {
+		// Testing one type of externally loaded service is good enough
+		// The loader has its own tests for the other scenarios
+		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
+		load(String.format("%s={ \"solace-messaging\": [] }", ENV_SOLCAP_SERVICES));
+
+		String solaceManifest = context.getEnvironment().getProperty(ENV_SOLCAP_SERVICES);
+		assertNotNull(solaceManifest);
+		assertTrue(solaceManifest.contains("solace-messaging"));
+
+		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
+		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
+		assertNotNull(this.context.getBean(JCSMPProperties.class));
+		assertNull(this.context.getBean(SolaceServiceCredentials.class));
+	}
+
+	@Test
+	public void applicationPropertiesBasicBeanTest() {
+		load("");
+		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
+		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
+		assertNotNull(this.context.getBean(JCSMPProperties.class));
+		assertNull(this.context.getBean(SolaceServiceCredentials.class));
 	}
 
 }

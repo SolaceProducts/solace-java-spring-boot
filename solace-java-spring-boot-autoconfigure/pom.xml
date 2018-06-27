@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>com.solace.spring.boot</groupId>
 		<artifactId>solace-java-spring-boot-parent</artifactId>
-		<version>1.1.0-SNAPSHOT</version>
+		<version>1.2.0-SNAPSHOT</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
@@ -19,6 +19,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-autoconfigure</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.solace.cloud.core</groupId>
+			<artifactId>solace-services-info</artifactId>
+			<version>0.1.0</version>
 		</dependency>
 		<dependency>
 			<groupId>com.solacesystems</groupId>
@@ -37,23 +42,17 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-core</artifactId>
 			<optional>true</optional>
 		</dependency>
-					
-		<dependency>
-	        <groupId>com.solace.cloud.cloudfoundry</groupId>
-	        <artifactId>solace-spring-cloud-connector</artifactId>
-	        <version>2.0.1</version>
-		</dependency>
 
 		<dependency>
-			<groupId>com.solace.cloud.solacecloud</groupId>
-			<artifactId>solace-spring-solacecloud-connector</artifactId>
-			<version>2.1.0-SNAPSHOT</version>
+		  <groupId>com.solace.cloud.cloudfoundry</groupId>
+		  <artifactId>solace-spring-cloud-connector</artifactId>
+		  <version>2.1.0</version>
 		</dependency>
 
 		<dependency>
