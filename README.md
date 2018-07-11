@@ -18,13 +18,13 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 ---
 
 ## Overview
- 
-As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring Boot applications and as such it will be maintained and updated as our internal needs required. 
+
+As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring Boot applications and as such it will be maintained and updated as our internal needs required.
 
 The artifacts are published to Maven Central so it should be familiar and intuitive to use this project in your applications. If you find Solace Java API properties that this project does not yet support, simply raise an issue and we'll look into adding this support or submit a pull request with the update.
 
-One item to note as described below is that this project introduces a new factory for Solace Java API sessions: `SpringJCSMPFactory`. Overtime the Solace Java API may introduce a similar factory and remove the need for this custom extension. For now however, this is included in the auto-configuration jar for ease of use. 
-    
+One item to note as described below is that this project introduces a new factory for Solace Java API sessions: `SpringJCSMPFactory`. Overtime the Solace Java API may introduce a similar factory and remove the need for this custom extension. For now however, this is included in the auto-configuration jar for ease of use.
+
 ## Using Auto-Configuration in your App
 
 See the associated `solace-java-sample-app` for an example of how this is all put together in a simple application. You'll need to do three steps:
@@ -61,7 +61,7 @@ compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
 
 ### Using Spring Dependency Auto-Configuration (@SpringBootApplication & @Autowired)
 
-Now in your application code, you can simply declare the `SpringJCSMPFactory` and annotate it so that it is autowired: 
+Now in your application code, you can simply declare the `SpringJCSMPFactory` and annotate it so that it is autowired:
 
 ```java
 @Autowired
@@ -92,7 +92,7 @@ private SolaceServiceCredentials solaceServiceCredentials;
 private JCSMPProperties jcsmpProperties;
 ```
 
-However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace Messaging service manifest](#exposing-a-solace-messaging-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
+However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace PubSub+ service manifest](#exposing-a-solace-pubsub-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
 
 ### Configure the Application to use your Solace Messaging Service Credentials
 #### Deploying your Application to a Cloud Platform
@@ -111,7 +111,7 @@ For example:
 </dependency>
 ```
 
-#### Exposing a Solace Messaging Service Manifest in the Application's Environment
+#### Exposing a Solace PubSub+ Service Manifest in the Application's Environment
 
 Configuration of the `SpringJCSMPFactory` can be done through exposing a Solace Messaging service manifest to the application's JVM properties or OS environment.
 
@@ -137,7 +137,7 @@ solace.java.connectRetriesPerHost
 solace.java.reconnectRetryWaitInMillis
 ```
 
-Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`. 
+Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`.
 
 See [`SolaceJavaProperties`](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list.
 
@@ -149,7 +149,7 @@ solace.java.apiProperties.reapply_subscriptions=false
 
 Note that the direct configuration of `solace.java.` properties takes precedence over the `solace.java.apiProperties.`.
 
-## Building the Project Yourself 
+## Building the Project Yourself
 
 This project depends on maven for building. To build the jar locally, check out the project and build from source by doing the following:
 
@@ -157,11 +157,11 @@ This project depends on maven for building. To build the jar locally, check out 
     cd solace-java-spring-boot
     mvn package
 
-This will build the auto-configuration jar and associated sample. 
+This will build the auto-configuration jar and associated sample.
 
 Note: As currently setup, the build requires Java 1.8. If you want to use another older version of Java adjust the build accordingly.
 
-## Running the Sample 
+## Running the Sample
 
 The simplest way to run the sample is from the project root folder using maven. For example:
 

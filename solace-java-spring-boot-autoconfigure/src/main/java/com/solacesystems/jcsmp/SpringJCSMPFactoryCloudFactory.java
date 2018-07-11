@@ -26,7 +26,7 @@ import com.solace.spring.cloud.core.SolaceMessagingInfo;
 
 /**
  * A Factory for {@link SpringJCSMPFactory} to Support Cloud Environments having
- * multiple solace-messaging services.
+ * multiple solace-pubsub services.
  */
 public interface SpringJCSMPFactoryCloudFactory {
 	/**
