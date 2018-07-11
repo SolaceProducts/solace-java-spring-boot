@@ -31,7 +31,7 @@ See the associated `solace-java-sample-app` for an example of how this is all pu
 
 1. Update your build.
 2. Autowire a `SpringJCSMPFactory`.
-3. Configure the application to use a Solace Messaging service.
+3. Configure the application to use a Solace PubSub+ service.
 
 ### Updating your build
 
@@ -83,21 +83,21 @@ Alternatively, you could autowire one or more of the following to create your ow
 @Autowired
 private SpringJCSMPFactoryCloudFactory springJcsmpFactoryCloudFactory;
 
-/* A POJO describing the credentials for the first detected Solace Messaging service */
+/* A POJO describing the credentials for the first detected Solace PubSub+ service */
 @Autowired
 private SolaceServiceCredentials solaceServiceCredentials;
 
-/* The properties of a JCSMP connection for the first detected Solace Messaging service */
+/* The properties of a JCSMP connection for the first detected Solace PubSub+ service */
 @Autowired
 private JCSMPProperties jcsmpProperties;
 ```
 
 However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace PubSub+ service manifest](#exposing-a-solace-pubsub-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
 
-### Configure the Application to use your Solace Messaging Service Credentials
+### Configure the Application to use your Solace PubSub+ Service Credentials
 #### Deploying your Application to a Cloud Platform
 
-By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace Messaging services when deployed on a Cloud Platform such as Cloud Foundry.
+By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace PubSub+ services when deployed on a Cloud Platform such as Cloud Foundry.
 
 Currently, the [Solace Cloud Foundry Cloud Connector](https://github.com/SolaceProducts/sl-spring-cloud-connectors) is the only connector that is supported by default in this library, but could easily be augmented by adding your own Solace Spring Cloud Connectors as dependencies to the [auto-configuration's POM](solace-java-spring-boot-autoconfigure/pom.xml).
 
@@ -113,9 +113,9 @@ For example:
 
 #### Exposing a Solace PubSub+ Service Manifest in the Application's Environment
 
-Configuration of the `SpringJCSMPFactory` can be done through exposing a Solace Messaging service manifest to the application's JVM properties or OS environment.
+Configuration of the `SpringJCSMPFactory` can be done through exposing a Solace PubSub+ service manifest to the application's JVM properties or OS environment.
 
-For example, you can set a `SOLCAP_SERVICES` variable in either your JVM properties or OS's environment to directly contain a `VCAP_SERVICES`-formatted manifest file. In which case, the autoconfigure will pick up any Solace Messaging services in it and use them to accordingly configure your `SpringJCSMPFactory`.
+For example, you can set a `SOLCAP_SERVICES` variable in either your JVM properties or OS's environment to directly contain a `VCAP_SERVICES`-formatted manifest file. In which case, the autoconfigure will pick up any Solace PubSub+ services in it and use them to accordingly configure your `SpringJCSMPFactory`.
 
 The properties provided by this externally-provided manifest can also be augmented using the values from the [application's properties file](#updating-your-application-properties).
 
