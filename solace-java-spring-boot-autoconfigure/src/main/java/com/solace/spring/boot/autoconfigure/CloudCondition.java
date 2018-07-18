@@ -13,7 +13,7 @@ public class CloudCondition implements Condition {
 		String VCAP_APPLICATION = env.getProperty("VCAP_APPLICATION");
 		if ( VCAP_APPLICATION != null  ) {
 			String VCAP_SERVICES = env.getProperty("VCAP_SERVICES");
-			return VCAP_SERVICES != null && VCAP_SERVICES.contains("solace-messaging");
+			return VCAP_SERVICES != null && VCAP_SERVICES.contains("solace-pubsub");
 		}
 		return false;
 	}

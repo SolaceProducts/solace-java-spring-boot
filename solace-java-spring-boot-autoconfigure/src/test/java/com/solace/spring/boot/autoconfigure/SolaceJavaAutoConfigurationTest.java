@@ -100,12 +100,12 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		// The loader has its own tests for the other scenarios
 		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
 
-		load(String.format("%s={ \"solace-messaging\": [%s] }",
+		load(String.format("%s={ \"solace-pubsub\": [%s] }",
 				ENV_SOLCAP_SERVICES, addOneSolaceService(ENV_SOLCAP_SERVICES)));
 
 		String solaceManifest = context.getEnvironment().getProperty(ENV_SOLCAP_SERVICES);
 		assertNotNull(solaceManifest);
-		assertTrue(solaceManifest.contains("solace-messaging"));
+		assertTrue(solaceManifest.contains("solace-pubsub"));
 
 		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
@@ -118,11 +118,11 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		// Testing one type of externally loaded service is good enough
 		// The loader has its own tests for the other scenarios
 		String ENV_SOLCAP_SERVICES = "SOLCAP_SERVICES";
-		load(String.format("%s={ \"solace-messaging\": [] }", ENV_SOLCAP_SERVICES));
+		load(String.format("%s={ \"solace-pubsub\": [] }", ENV_SOLCAP_SERVICES));
 
 		String solaceManifest = context.getEnvironment().getProperty(ENV_SOLCAP_SERVICES);
 		assertNotNull(solaceManifest);
-		assertTrue(solaceManifest.contains("solace-messaging"));
+		assertTrue(solaceManifest.contains("solace-pubsub"));
 
 		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));

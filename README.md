@@ -18,20 +18,20 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 ---
 
 ## Overview
- 
-As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring Boot applications and as such it will be maintained and updated as our internal needs required. 
+
+As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring Boot applications and as such it will be maintained and updated as our internal needs required.
 
 The artifacts are published to Maven Central so it should be familiar and intuitive to use this project in your applications. If you find Solace Java API properties that this project does not yet support, simply raise an issue and we'll look into adding this support or submit a pull request with the update.
 
-One item to note as described below is that this project introduces a new factory for Solace Java API sessions: `SpringJCSMPFactory`. Overtime the Solace Java API may introduce a similar factory and remove the need for this custom extension. For now however, this is included in the auto-configuration jar for ease of use. 
-    
+One item to note as described below is that this project introduces a new factory for Solace Java API sessions: `SpringJCSMPFactory`. Overtime the Solace Java API may introduce a similar factory and remove the need for this custom extension. For now however, this is included in the auto-configuration jar for ease of use.
+
 ## Using Auto-Configuration in your App
 
 See the associated `solace-java-sample-app` for an example of how this is all put together in a simple application. You'll need to do three steps:
 
 1. Update your build.
 2. Autowire a `SpringJCSMPFactory`.
-3. Configure the application to use a Solace Messaging service.
+3. Configure the application to use a Solace PubSub+ service.
 
 ### Updating your build
 
@@ -61,7 +61,7 @@ compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
 
 ### Using Spring Dependency Auto-Configuration (@SpringBootApplication & @Autowired)
 
-Now in your application code, you can simply declare the `SpringJCSMPFactory` and annotate it so that it is autowired: 
+Now in your application code, you can simply declare the `SpringJCSMPFactory` and annotate it so that it is autowired:
 
 ```java
 @Autowired
@@ -83,21 +83,21 @@ Alternatively, you could autowire one or more of the following to create your ow
 @Autowired
 private SpringJCSMPFactoryCloudFactory springJcsmpFactoryCloudFactory;
 
-/* A POJO describing the credentials for the first detected Solace Messaging service */
+/* A POJO describing the credentials for the first detected Solace PubSub+ service */
 @Autowired
 private SolaceServiceCredentials solaceServiceCredentials;
 
-/* The properties of a JCSMP connection for the first detected Solace Messaging service */
+/* The properties of a JCSMP connection for the first detected Solace PubSub+ service */
 @Autowired
 private JCSMPProperties jcsmpProperties;
 ```
 
-However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace Messaging service manifest](#exposing-a-solace-messaging-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
+However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace PubSub+ service manifest](#exposing-a-solace-pubsub-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
 
-### Configure the Application to use your Solace Messaging Service Credentials
+### Configure the Application to use your Solace PubSub+ Service Credentials
 #### Deploying your Application to a Cloud Platform
 
-By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace Messaging services when deployed on a Cloud Platform such as Cloud Foundry.
+By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace PubSub+ services when deployed on a Cloud Platform such as Cloud Foundry.
 
 Currently, the [Solace Cloud Foundry Cloud Connector](https://github.com/SolaceProducts/sl-spring-cloud-connectors) is the only connector that is supported by default in this library, but could easily be augmented by adding your own Solace Spring Cloud Connectors as dependencies to the [auto-configuration's POM](solace-java-spring-boot-autoconfigure/pom.xml).
 
@@ -111,11 +111,11 @@ For example:
 </dependency>
 ```
 
-#### Exposing a Solace Messaging Service Manifest in the Application's Environment
+#### Exposing a Solace PubSub+ Service Manifest in the Application's Environment
 
-Configuration of the `SpringJCSMPFactory` can be done through exposing a Solace Messaging service manifest to the application's JVM properties or OS environment.
+Configuration of the `SpringJCSMPFactory` can be done through exposing a Solace PubSub+ service manifest to the application's JVM properties or OS environment.
 
-For example, you can set a `SOLCAP_SERVICES` variable in either your JVM properties or OS's environment to directly contain a `VCAP_SERVICES`-formatted manifest file. In which case, the autoconfigure will pick up any Solace Messaging services in it and use them to accordingly configure your `SpringJCSMPFactory`.
+For example, you can set a `SOLCAP_SERVICES` variable in either your JVM properties or OS's environment to directly contain a `VCAP_SERVICES`-formatted manifest file. In which case, the autoconfigure will pick up any Solace PubSub+ services in it and use them to accordingly configure your `SpringJCSMPFactory`.
 
 The properties provided by this externally-provided manifest can also be augmented using the values from the [application's properties file](#updating-your-application-properties).
 
@@ -137,7 +137,7 @@ solace.java.connectRetriesPerHost
 solace.java.reconnectRetryWaitInMillis
 ```
 
-Where reasonable, sensible defaults are always chosen. So a developer using a Solace VMR and wishing to use the default message-vpn must only set the `solace.java.host`. 
+Where reasonable, sensible defaults are always chosen. So a developer using a Solace PubSub+ message broker and wishing to use the default message-vpn must only set the `solace.java.host`.
 
 See [`SolaceJavaProperties`](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list.
 
@@ -149,7 +149,7 @@ solace.java.apiProperties.reapply_subscriptions=false
 
 Note that the direct configuration of `solace.java.` properties takes precedence over the `solace.java.apiProperties.`.
 
-## Building the Project Yourself 
+## Building the Project Yourself
 
 This project depends on maven for building. To build the jar locally, check out the project and build from source by doing the following:
 
@@ -157,11 +157,11 @@ This project depends on maven for building. To build the jar locally, check out 
     cd solace-java-spring-boot
     mvn package
 
-This will build the auto-configuration jar and associated sample. 
+This will build the auto-configuration jar and associated sample.
 
 Note: As currently setup, the build requires Java 1.8. If you want to use another older version of Java adjust the build accordingly.
 
-## Running the Sample 
+## Running the Sample
 
 The simplest way to run the sample is from the project root folder using maven. For example:
 

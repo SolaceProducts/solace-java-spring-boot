@@ -37,61 +37,61 @@ public class SolaceJavaProperties {
      * Solace Message Router Message-VPN.
      */
     private String msgVpn = "default";
-    
+
     /**
      * Solace Message Router Client Username.
      * This field is always used in non cloud deployments.
      * Under a cloud deployment this field is used when the cloud expected value was not provided (null).
      */
     private String clientUsername = "spring-default-client-username";
-    
+
     /**
      * Solace Message Router Client Password.
      * This field is always used in non cloud deployments.
      * Under a cloud deployment this field is used when the cloud expected value was not provided (null).
      */
     private String clientPassword;
-    
+
     /**
      * The client name to use when connecting to Solace Message Router. This must be unique. If absent, the API will generate a reasonable client name.
      */
     private String clientName;
-    
+
     /**
      * The number of times to attempt and retry a connection to the host Solace Message Router (or list of routers) during initial connection setup.
      * <p>
-     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int connectRetries = 1;
-    
+
     /**
      * The number of times to attempt to reconnect to the host Solace Message Router (or list of routers) after an initial connected session goes down.
      * <p>
-     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetries = 5;
-    
+
     /**
-     * When using a host list for the HOST property, this property defines how many times to try 
-     * to connect or reconnect to a single host before moving to the next host in the list. 
-     * NOTE: This property works in conjunction with the connect and reconnect retries settings; 
+     * When using a host list for the HOST property, this property defines how many times to try
+     * to connect or reconnect to a single host before moving to the next host in the list.
+     * NOTE: This property works in conjunction with the connect and reconnect retries settings;
      * it does not replace them.
      * <p>
-     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
-    private int connectRetriesPerHost = 20; 
-    
+    private int connectRetriesPerHost = 20;
+
     /**
-     * How much time in (MS) to wait between each attempt to connect or reconnect to a host. 
-     * If a connect or reconnect attempt to host is not successful, the API waits for the 
-     * amount of time set for reconnectRetryWaitInMillis, and then makes another connect or 
+     * How much time in (MS) to wait between each attempt to connect or reconnect to a host.
+     * If a connect or reconnect attempt to host is not successful, the API waits for the
+     * amount of time set for reconnectRetryWaitInMillis, and then makes another connect or
      * reconnect attempt.
      * <p>
-     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace Messaging API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm">http://docs.solace.com/Solace-Messaging-APIs/Configuring-Connection-T.htm</a>
+     * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
+     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetryWaitInMillis = 3000;
 
@@ -104,9 +104,9 @@ public class SolaceJavaProperties {
      */
 	@NestedConfigurationProperty
 	private final Map<String,String> apiProperties = new ConcurrentHashMap<>();
-    
-    
-    
+
+
+
     public String getHost() {
         return host;
     }
@@ -146,7 +146,7 @@ public class SolaceJavaProperties {
     public void setClientName(String clientName) {
         this.clientName = clientName;
     }
-    
+
     public int getConnectRetries() {
         return connectRetries;
     }
@@ -154,7 +154,7 @@ public class SolaceJavaProperties {
     public void setConnectRetries(int connectRetries) {
         this.connectRetries = connectRetries;
     }
-    
+
     public int getReconnectRetries() {
         return reconnectRetries;
     }
@@ -162,7 +162,7 @@ public class SolaceJavaProperties {
     public void setReconnectRetries(int reconnectRetries) {
         this.reconnectRetries = reconnectRetries;
     }
-    
+
     public int getConnectRetriesPerHost() {
         return connectRetriesPerHost;
     }
@@ -170,7 +170,7 @@ public class SolaceJavaProperties {
     public void setConnectRetriesPerHost(int connectRetriesPerHost) {
         this.connectRetriesPerHost = connectRetriesPerHost;
     }
-    
+
     public int getReconnectRetryWaitInMillis() {
         return reconnectRetryWaitInMillis;
     }
