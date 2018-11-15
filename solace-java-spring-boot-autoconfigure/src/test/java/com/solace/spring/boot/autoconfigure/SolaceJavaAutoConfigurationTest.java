@@ -127,7 +127,7 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
 		assertNotNull(this.context.getBean(JCSMPProperties.class));
-		assertNull(this.context.getBean(SolaceServiceCredentials.class));
+		assertEquals( "null", this.context.getBean("findFirstSolaceServiceCredentials" ).toString() );
 	}
 
 	@Test
@@ -136,7 +136,7 @@ public class SolaceJavaAutoConfigurationTest extends SolaceJavaAutoConfiguration
 		assertNotNull(this.context.getBean(SpringJCSMPFactoryCloudFactory.class));
 		assertNotNull(this.context.getBean(SpringJCSMPFactory.class));
 		assertNotNull(this.context.getBean(JCSMPProperties.class));
-		assertNull(this.context.getBean(SolaceServiceCredentials.class));
+		assertEquals( "null", this.context.getBean("findFirstSolaceServiceCredentials" ).toString() );
 	}
 
 }

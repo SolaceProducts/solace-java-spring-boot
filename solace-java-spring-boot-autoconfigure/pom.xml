@@ -44,12 +44,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-core</artifactId>
-			<optional>true</optional>
-		</dependency>
-
-		<dependency>
 		  <groupId>com.solace.cloud.cloudfoundry</groupId>
 		  <artifactId>solace-spring-cloud-connector</artifactId>
 		  <version>3.0.0</version>

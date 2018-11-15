@@ -29,11 +29,20 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>com.solace.cloud.core</groupId>
+			<artifactId>solace-services-info</artifactId>
+			<version>0.2.0</version>
+		</dependency>
+		<dependency>
 			<groupId>com.solace.spring.boot</groupId>
 			<artifactId>solace-java-spring-boot-starter</artifactId>
 			<version>${project.version}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>com.solace.cloud.cloudfoundry</groupId>
+			<artifactId>solace-spring-cloud-connector</artifactId>
+			<version>3.0.0</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
