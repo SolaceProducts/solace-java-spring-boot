@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import org.junit.After;
 import org.junit.Rule;
 import org.junit.contrib.java.lang.system.EnvironmentVariables;
-import org.springframework.boot.test.util.EnvironmentTestUtils;
+import org.springframework.boot.test.util.TestPropertyValues;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.ResolvableType;
@@ -92,7 +92,7 @@ public abstract class SolaceJavaAutoConfigurationTestBase {
 
     void load(Class<?> config, String... environment) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        EnvironmentTestUtils.addEnvironment(applicationContext, environment);
+        TestPropertyValues.of(environment).applyTo(applicationContext);
         applicationContext.register(config);
         applicationContext.register(configClass);
         applicationContext.refresh();
