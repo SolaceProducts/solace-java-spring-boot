@@ -166,6 +166,8 @@ Note: As currently setup, the build requires Java 1.8. If you want to use anothe
 The simplest way to run the sample is from the project root folder using maven. For example:
 
 	mvn spring-boot:run
+  
+Hint: look for "Sending Hello World" and "TextMessage received: Hello World" in the displayed logs.
 
 ## Contributing
 
