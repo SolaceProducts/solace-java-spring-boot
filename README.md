@@ -108,7 +108,7 @@ For example:
 <dependency>
 	<groupId>com.solace.cloud.cloudfoundry</groupId>
 	<artifactId>solace-spring-cloud-connector</artifactId>
-	<version>2.1.0</version>
+	<version>[3,)</version>
 </dependency>
 ```
 
