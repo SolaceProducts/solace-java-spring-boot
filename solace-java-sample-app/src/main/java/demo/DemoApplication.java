@@ -68,7 +68,6 @@ public class DemoApplication {
         private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();
         private DemoPublishEventHandler pubEventHandler = new DemoPublishEventHandler();
 
-        @Override
         public void run(String... strings) throws Exception {
             final String msg = "Hello World";
             final JCSMPSession session = solaceFactory.createSession();

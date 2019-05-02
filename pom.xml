@@ -181,7 +181,6 @@
 				</property>
 			</activation>
 			<modules>
-				<module>solace-java-sample-app</module>
 				<module>solace-java-spring-boot-autoconfigure</module>
 				<module>solace-java-spring-boot-starter</module>
 			</modules>
