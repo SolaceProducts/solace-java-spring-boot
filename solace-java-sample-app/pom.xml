@@ -2,16 +2,10 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>com.solace.spring.boot</groupId>
-		<artifactId>solace-java-spring-boot-parent</artifactId>
-		<version>3.2.1-SNAPSHOT</version>
-		<relativePath>../pom.xml</relativePath>
-	</parent>
-
+  <groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-sample-app</artifactId>
+  <version>1.0.0</version>
 	<packaging>jar</packaging>
-
 	<name>Spring Boot AutoConfiguration :: Solace Java API Sample App</name>
 	<description>Sample Application using the custom auto-config</description>
 	<url>https://github.com/SolaceProducts/solace-java-spring-boot</url>
@@ -23,20 +17,20 @@
 	</properties>
 
 	<dependencies>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+      <version>2.1.4.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>com.solace.spring.boot</groupId>
 			<artifactId>solace-java-spring-boot-starter</artifactId>
-			<version>${project.version}</version>
+      <version>[3,)</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
+      <version>2.1.4.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
