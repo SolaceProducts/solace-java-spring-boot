@@ -96,6 +96,7 @@ private JCSMPProperties jcsmpProperties;
 However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace PubSub+ service manifest](#exposing-a-solace-pubsub-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
 
 ### Configure the Application to use your Solace PubSub+ Service Credentials
+
 #### Deploying your Application to a Cloud Platform
 
 By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace PubSub+ services when deployed on a Cloud Platform such as Cloud Foundry.
@@ -108,7 +109,7 @@ For example:
 <dependency>
 	<groupId>com.solace.cloud.cloudfoundry</groupId>
 	<artifactId>solace-spring-cloud-connector</artifactId>
-	<version>[3,)</version>
+	<version>[4,)</version>
 </dependency>
 ```
 
@@ -138,7 +139,7 @@ solace.java.connectRetriesPerHost
 solace.java.reconnectRetryWaitInMillis
 ```
 
-Where reasonable, sensible defaults are always chosen. So a developer using a Solace PubSub+ message broker and wishing to use the default message-vpn must only set the `solace.java.host`.
+Where reasonable, sensible defaults are always chosen. So a developer using a Solace PubSub+ message broker and wishing to use the default message-vpn may only set the `solace.java.host`.
 
 See [`SolaceJavaProperties`](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list.
 
