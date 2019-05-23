@@ -180,7 +180,7 @@ See the list of [contributors](https://github.com/SolaceProducts/solace-java-spr
 This project is licensed under the Apache License, Version 2.0. - See the [LICENSE](LICENSE) file for details.
 
 ## Code of Conduct
-[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](code-of-conduct.md)
+[![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 Please note that this project is released with a Contributor Code of Conduct. By participating in this project you agree to abide by its terms.
 
 ## Resources
