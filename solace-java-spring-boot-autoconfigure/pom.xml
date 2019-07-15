@@ -28,7 +28,7 @@
 		<dependency>
 			<groupId>com.solacesystems</groupId>
 			<artifactId>sol-jcsmp</artifactId>
-			<version>[10.5,)</version>
+			<version>10.6.3</version>
 			<optional>true</optional>
 		</dependency>
 		<dependency>
