@@ -20,7 +20,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
-      <version>2.1.4.RELEASE</version>
+      <version>2.1.6.RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>com.solace.spring.boot</groupId>
@@ -30,7 +30,7 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
-      <version>2.1.4.RELEASE</version>
+      <version>2.1.6.RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
@@ -40,7 +40,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<version>2.1.4.RELEASE</version>
+				<version>2.1.6.RELEASE</version>
 				<configuration>
 					<fork>true</fork>
 					<skip>false</skip>
