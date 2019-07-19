@@ -21,7 +21,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-parent</artifactId>
-	<version>2.3.3-SNAPSHOT</version>
+	<version>2.3.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Solace Java API Spring Boot AutoConfiguration</name>
 	<description>Parent POM for Solace Java API Spring Boot AutoConfiguration </description>
