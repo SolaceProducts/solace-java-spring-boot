@@ -59,11 +59,9 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
 
     @Parameter(0) public String beanClassName;
     @Parameter(1) public Class<T> beanClass;
-	CloudCondition cloudCondition = new CloudCondition();
-
-	public SolaceJavaAutoCloudConfigurationTest() {
-		super(SolaceJavaAutoCloudConfiguration.class);
-	}
+    public SolaceJavaAutoCloudConfigurationTest() {
+        super(SolaceJavaAutoCloudConfiguration.class);
+    }
 
     @Parameters(name = "{0}")
     public static Collection<Object[]> parameterData() {
@@ -153,7 +151,6 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
         assertNotNull(bean);
 
         if (beanClass.equals(SpringJCSMPFactoryCloudFactory.class)) {
-        	@SuppressWarnings("unchecked")
             SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory = (SpringJCSMPFactoryCloudFactory) bean;
             assertNotNull(springJCSMPFactoryCloudFactory.getSpringJCSMPFactory());
             List<SolaceServiceCredentials> availableServices = springJCSMPFactoryCloudFactory.getSolaceServiceCredentials();
@@ -203,6 +200,46 @@ public class SolaceJavaAutoCloudConfigurationTest<T> extends SolaceJavaAutoConfi
 		assertEquals(20, (int) cp.getConnectRetriesPerHost());
 		assertEquals(3000, (int) cp.getReconnectRetryWaitInMillis());
 	}
+
+        @Test
+        public void isCloudConfiguredByUserProvidedServices() throws InvalidPropertiesException {
+
+                makeCloudEnv();
+
+                String JSONString = addOneUserProvidedSolaceService("VCAP_SERVICES");
+                String CF_VCAP_SERVICES = "VCAP_SERVICES={ \"user-provided\": [" + JSONString + "] }";
+
+                load(CF_CLOUD_APP_ENV, CF_VCAP_SERVICES);
+
+                SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory = this.context
+                                .getBean(SpringJCSMPFactoryCloudFactory.class);
+                assertNotNull(springJCSMPFactoryCloudFactory);
+
+                SpringJCSMPFactory jcsmpFactory = this.context.getBean(SpringJCSMPFactory.class);
+                assertNotNull(jcsmpFactory);
+
+                JCSMPSession session = jcsmpFactory.createSession();
+                assertNotNull(session);
+
+                // The are cloud provided (SolaceMessagingInfo) properties
+                assertEquals("tcp://192.168.1.51:7000", (String) session.getProperty(JCSMPProperties.HOST));
+                assertEquals("sample-msg-vpn2", (String) session.getProperty(JCSMPProperties.VPN_NAME));
+                assertEquals("sample-client-username2", (String) session.getProperty(JCSMPProperties.USERNAME));
+                assertEquals("sample-client-password2", (String) session.getProperty(JCSMPProperties.PASSWORD));
+
+                // Other non cloud (SolaceMessagingInfo) provided properties
+                assertEquals(JCSMPProperties.SUPPORTED_MESSAGE_ACK_AUTO,
+                                (String) session.getProperty(JCSMPProperties.MESSAGE_ACK_MODE));
+                assertEquals(Boolean.FALSE, (Boolean) session.getProperty(JCSMPProperties.REAPPLY_SUBSCRIPTIONS));
+                assertNotNull((String) session.getProperty(JCSMPProperties.CLIENT_NAME));
+                // Channel properties
+                JCSMPChannelProperties cp = (JCSMPChannelProperties) session
+                                .getProperty(JCSMPProperties.CLIENT_CHANNEL_PROPERTIES);
+                assertEquals(1, (int) cp.getConnectRetries());
+                assertEquals(5, (int) cp.getReconnectRetries());
+                assertEquals(20, (int) cp.getConnectRetriesPerHost());
+                assertEquals(3000, (int) cp.getReconnectRetryWaitInMillis());
+        }
 
 	@Test
 	public void isCloudConfiguredBySolaceMessagingInfoAndOtherProperties() throws InvalidPropertiesException {

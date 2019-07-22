@@ -18,7 +18,6 @@
  */
 package demo;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import com.solace.services.core.model.SolaceServiceCredentials;
@@ -58,19 +57,17 @@ public class DemoApplication {
 
         @Autowired private SpringJCSMPFactory solaceFactory;
 
-        // Other beans that can be used together to generate a customized SpringJCSMPFactory
-        @Autowired private SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory;
-        @Autowired private SolaceServiceCredentials solaceServiceCredentials;
-        @Autowired private JCSMPProperties jcsmpProperties;
-
-        /* For backwards compatibility:
-            - As before, these exist only in the specific scenario where the app is deployed in Cloud Foundry.*/
+        // Examples of other beans that can be used together to generate a customized SpringJCSMPFactory
+        @Autowired(required=false) private SpringJCSMPFactoryCloudFactory springJCSMPFactoryCloudFactory;
+        @Autowired(required=false) private SolaceServiceCredentials solaceServiceCredentials;
+        @Autowired(required=false) private JCSMPProperties jcsmpProperties;
+        /* Also, for backwards compatibility:
+            - As before, this is populated only in the specific scenario where the app is deployed in Cloud Foundry.*/
         @Autowired(required=false) private SolaceMessagingInfo solaceMessagingInfo;
 
         private DemoMessageConsumer msgConsumer = new DemoMessageConsumer();
         private DemoPublishEventHandler pubEventHandler = new DemoPublishEventHandler();
 
-        @Override
         public void run(String... strings) throws Exception {
             final String msg = "Hello World";
             final JCSMPSession session = solaceFactory.createSession();

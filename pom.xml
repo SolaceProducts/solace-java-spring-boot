@@ -1,9 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *   http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing,
+ * software distributed under the License is distributed on an
+ * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied.  See the License for the
+ * specific language governing permissions and limitations
+ * under the License.
+ -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-parent</artifactId>
-	<version>2.2.0-SNAPSHOT</version>
+	<version>2.3.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>Solace Java API Spring Boot AutoConfiguration</name>
 	<description>Parent POM for Solace Java API Spring Boot AutoConfiguration </description>
@@ -18,8 +36,8 @@
 
 	<developers>
 		<developer>
-			<name>Mark Spielman</name>
-			<email>info@solace.com</email>
+			<name>support</name>
+			<email>support@solace.com</email>
 			<organization>Solace</organization>
 			<organizationUrl>http://dev.solace.com</organizationUrl>
 		</developer>
@@ -43,7 +61,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>1.4.3.RELEASE</version>
+		<version>2.1.6.RELEASE</version>
 	</parent>
 
 	<repositories>
@@ -80,14 +98,17 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.5.1</version>
 				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
+					<!-- or whatever Java version you use -->
+					<source>1.8</source>
+					<target>1.8</target>
 				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.10.4</version>
 				<executions>
 					<execution>
 						<id>attach-javadocs</id>
@@ -100,6 +121,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
+				<version>3.0.1</version>
 				<executions>
 					<execution>
 						<id>attach-sources</id>
@@ -181,7 +203,6 @@
 				</property>
 			</activation>
 			<modules>
-				<module>solace-java-sample-app</module>
 				<module>solace-java-spring-boot-autoconfigure</module>
 				<module>solace-java-spring-boot-starter</module>
 			</modules>
@@ -199,6 +220,4 @@
 			</distributionManagement>
 		</profile>
 	</profiles>
-
-
 </project>

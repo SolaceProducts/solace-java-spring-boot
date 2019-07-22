@@ -19,9 +19,9 @@ This project provides Spring Boot Auto-Configuration and an associated Spring Bo
 
 ## Overview
 
-As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation. This project is used internally within Solace to enable Spring Boot applications and as such it will be maintained and updated as our internal needs required.
+As stated this project provides a Spring Boot Auto-Configuration implementation and a Spring Boot Starter pom for the Solace Java API. The goal of this project is to make it easier to use the Solace Java API with Spring Boot auto-configuration through the @Autowired annotation.
 
-The artifacts are published to Maven Central so it should be familiar and intuitive to use this project in your applications. If you find Solace Java API properties that this project does not yet support, simply raise an issue and we'll look into adding this support or submit a pull request with the update.
+The artifacts are published to Maven Central so it should be familiar and intuitive to use this project in your applications.
 
 One item to note as described below is that this project introduces a new factory for Solace Java API sessions: `SpringJCSMPFactory`. Overtime the Solace Java API may introduce a similar factory and remove the need for this custom extension. For now however, this is included in the auto-configuration jar for ease of use.
 
@@ -39,13 +39,14 @@ The releases from this project are hosted in [Maven Central](https://mvnreposito
 
 The easiest way to get started is to include the `solace-java-spring-boot-starter` in your application. For an examples see the [Java Sample App](https://github.com/SolaceProducts/solace-java-spring-boot/tree/master/solace-java-sample-app) in this project.
 
-Here is how to include the spring boot starter in your project using Gradle and Maven.
+Here is how to include the latest spring boot starter in your project using Gradle and Maven. You can also add a specific version from [Maven Central](https://mvnrepository.com/artifact/com.solace.spring.boot/solace-java-spring-boot-starter ).
+Note that you'll neeed to include version 3.0.0 or later to use Spring Boot release 2.x.
 
 #### Using it with Gradle
 
 ```groovy
 // Solace Java API & auto-configuration
-compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
+compile("com.solace.spring.boot:solace-java-spring-boot-starter:3.0.0")
 ```
 
 #### Using it with Maven
@@ -55,7 +56,7 @@ compile("com.solace.spring.boot:solace-java-spring-boot-starter:1.+")
 <dependency>
 	<groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-starter</artifactId>
-	<version>1.+</version>
+	<version>3.0.0</version>
 </dependency>
 ```
 
@@ -95,6 +96,7 @@ private JCSMPProperties jcsmpProperties;
 However note that the `SolaceServiceCredentials` will only provide meaningful information if the application is configured by [exposure of a Solace PubSub+ service manifest](#exposing-a-solace-pubsub-service-manifest-in-the-applications-environment), and not by using the [application properties file](#updating-your-application-properties).
 
 ### Configure the Application to use your Solace PubSub+ Service Credentials
+
 #### Deploying your Application to a Cloud Platform
 
 By using [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/), this library can automatically configure a `SpringJCSMPFactory` using the detected Solace PubSub+ services when deployed on a Cloud Platform such as Cloud Foundry.
@@ -107,7 +109,7 @@ For example:
 <dependency>
 	<groupId>com.solace.cloud.cloudfoundry</groupId>
 	<artifactId>solace-spring-cloud-connector</artifactId>
-	<version>2.1.0</version>
+	<version>4.0.0</version>
 </dependency>
 ```
 
@@ -137,7 +139,7 @@ solace.java.connectRetriesPerHost
 solace.java.reconnectRetryWaitInMillis
 ```
 
-Where reasonable, sensible defaults are always chosen. So a developer using a Solace PubSub+ message broker and wishing to use the default message-vpn must only set the `solace.java.host`.
+Where reasonable, sensible defaults are always chosen. So a developer using a Solace PubSub+ message broker and wishing to use the default message-vpn may only set the `solace.java.host`.
 
 See [`SolaceJavaProperties`](https://github.com/SolaceProducts/solace-java-spring-boot/blob/master/solace-java-spring-boot-autoconfigure/src/main/java/com/solace/spring/boot/autoconfigure/SolaceJavaProperties.java) for the most up to date list.
 
@@ -165,7 +167,12 @@ Note: As currently setup, the build requires Java 1.8. If you want to use anothe
 
 The simplest way to run the sample is from the project root folder using maven. For example:
 
-	mvn spring-boot:run
+	cd solace-java-sample-app
+    mvn spring-boot:run
+  
+Hint: look for "Sending Hello World" and "TextMessage received: Hello World" in the displayed logs.
+
+Note: the JMS sample will automatically provision the queue used for testing on the message broker.
 
 ## Contributing
 

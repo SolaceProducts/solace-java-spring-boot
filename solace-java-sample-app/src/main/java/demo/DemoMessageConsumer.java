@@ -33,7 +33,6 @@ public class DemoMessageConsumer implements XMLMessageListener {
     private CountDownLatch latch = new CountDownLatch(1);
     private static final Logger logger = LoggerFactory.getLogger(DemoMessageConsumer.class);
 
-    @Override
     public void onReceive(BytesXMLMessage msg) {
         if (msg instanceof TextMessage) {
             logger.info("============= TextMessage received: " + ((TextMessage) msg).getText());
@@ -43,7 +42,6 @@ public class DemoMessageConsumer implements XMLMessageListener {
         latch.countDown(); // unblock main thread
     }
 
-    @Override
     public void onException(JCSMPException e) {
         logger.info("Consumer received exception:", e);
         latch.countDown(); // unblock main thread
