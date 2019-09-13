@@ -147,6 +147,7 @@ Any additional Solace Java API properties can be set through configuring `solace
 
 ```
 solace.java.apiProperties.reapply_subscriptions=false
+solace.java.apiProperties.ssl_trust_store=/path/to/truststore
 ```
 
 Note that the direct configuration of `solace.java.` properties takes precedence over the `solace.java.apiProperties.`.
