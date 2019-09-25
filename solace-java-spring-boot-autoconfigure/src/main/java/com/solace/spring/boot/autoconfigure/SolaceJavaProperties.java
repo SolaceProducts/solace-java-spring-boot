@@ -59,17 +59,15 @@ public class SolaceJavaProperties {
 
     /**
      * The number of times to attempt and retry a connection to the host Solace Message Router (or list of routers) during initial connection setup.
-     * <p>
+     *
      * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int connectRetries = 1;
 
     /**
      * The number of times to attempt to reconnect to the host Solace Message Router (or list of routers) after an initial connected session goes down.
-     * <p>
+     *
      * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetries = 5;
 
@@ -78,9 +76,8 @@ public class SolaceJavaProperties {
      * to connect or reconnect to a single host before moving to the next host in the list.
      * NOTE: This property works in conjunction with the connect and reconnect retries settings;
      * it does not replace them.
-     * <p>
+     *
      * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int connectRetriesPerHost = 20;
 
@@ -89,9 +86,8 @@ public class SolaceJavaProperties {
      * If a connect or reconnect attempt to host is not successful, the API waits for the
      * amount of time set for reconnectRetryWaitInMillis, and then makes another connect or
      * reconnect attempt.
-     * <p>
+     *
      * This property is optional and defaults to the suggested value when using HA redundant router pairs as documented in the Solace PubSub+ API Developer Guide.
-     * @see <a href="http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm">http://docs.solace.com/Solace-PubSub-Messaging-APIs/Developer-Guide/Configuring-Connection-T.htm</a>
      */
     private int reconnectRetryWaitInMillis = 3000;
 
@@ -99,7 +95,7 @@ public class SolaceJavaProperties {
     /**
      * API properties can be set by the attribute naming convention used in
      * fromProperties() and toProperties()
-     * @see <a href="https://docs.solace.com/API-Developer-Online-Ref-Documentation/java/constant-values.html"> JCSMPProperties</a>
+     * 
      * Example: solace.java.apiProperties.reapply_subscriptions=true
      */
 	@NestedConfigurationProperty
