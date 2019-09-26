@@ -89,7 +89,7 @@ public class SolaceJavaAutoCloudConfiguration extends SolaceJavaAutoConfiguratio
 	 *
 	 * @deprecated As of 1.1.0, usage of {@link SolaceMessagingInfo}
 	 * was replaced by its interface, {@link SolaceServiceCredentials}.
-	 * Use {@link #findFirstSolaceServiceCredentials()} instead.
+	 * Use {@link SolaceJavaAutoConfigurationBase#findFirstSolaceServiceCredentials()} instead.
 	 *
 	 * @return If in a Cloud Foundry environment, a Solace PubSub+ service is returned, otherwise null
 	 */
