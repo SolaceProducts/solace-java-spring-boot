@@ -46,7 +46,7 @@ Note that you'll neeed to include version 3.1.0 or later to use Spring Boot rele
 
 ```groovy
 // Solace Java API & auto-configuration
-compile("com.solace.spring.boot:solace-java-spring-boot-starter:3.1.0")
+compile("com.solace.spring.boot:solace-java-spring-boot-starter:3.2.0")
 ```
 
 #### Using it with Maven
@@ -56,7 +56,7 @@ compile("com.solace.spring.boot:solace-java-spring-boot-starter:3.1.0")
 <dependency>
 	<groupId>com.solace.spring.boot</groupId>
 	<artifactId>solace-java-spring-boot-starter</artifactId>
-	<version>3.1.0</version>
+	<version>3.2.0</version>
 </dependency>
 ```
 
@@ -170,7 +170,7 @@ The simplest way to run the sample is from the project root folder using maven. 
 
 	cd solace-java-sample-app
     mvn spring-boot:run
-  
+
 Hint: look for "Sending Hello World" and "TextMessage received: Hello World" in the displayed logs.
 
 Note: the JMS sample will automatically provision the queue used for testing on the message broker.
