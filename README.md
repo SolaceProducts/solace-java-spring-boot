@@ -1,5 +1,8 @@
 [![Build Status](https://travis-ci.org/SolaceProducts/solace-java-spring-boot.svg?branch=master)](https://travis-ci.org/SolaceProducts/solace-java-spring-boot)
 
+| NOTICE | This repository is no longer maintained. The project had been moved into [solace-spring-boot](https://github.com/SolaceProducts/solace-spring-boot). Please go there for the latest updates on this project. |
+| --- | --- |
+
 # Spring Boot Auto-Configuration for the Solace Java API
 
 This project provides Spring Boot Auto-Configuration and an associated Spring Boot Starter for the Solace Java API. The goal of this project is to make it easy to auto wire the Solace Java API within your application so you can take advantage of all the benefits of Spring Boot auto-configuration.
