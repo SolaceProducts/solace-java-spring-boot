@@ -1,3 +1,3 @@
-| NOTICE | This repository is no longer maintained. The project had been moved into [solace-spring-boot](https://github.com/SolaceProducts/solace-spring-boot). Please go there for the latest updates on this project. |
+| NOTICE | This project had been moved into [solace-spring-boot](https://github.com/SolaceProducts/solace-spring-boot). Please go to the [Solace Java Spring Boot Starter](https://github.com/SolaceProducts/solace-spring-boot/tree/master/solace-spring-boot-starters/solace-java-spring-boot-starter) in that repo for the latest updates on this project. |
 | --- | --- |
 
